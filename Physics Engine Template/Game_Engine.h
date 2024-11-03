@@ -8,10 +8,14 @@ class Game_Engine
 {
 private:
 	void initWindow();
+	void initVariables();
 
 	sf::VideoMode videoMode;
 	sf::RenderWindow* window;
 	sf::Event event;
+
+	float gravity;
+	float drag;
 	
 
 public:

@@ -20,6 +20,12 @@ void Game_Engine::initWindow()
 	this->window->setFramerateLimit(60);
 }
 
+void Game_Engine::initVariables()
+{
+	this->gravity = 9.8f;
+	this->drag = 0.5f;
+}
+
 void Game_Engine::CollisionDetection()
 {
 }
