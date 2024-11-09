@@ -14,7 +14,8 @@ Game_Engine::~Game_Engine()
 
 void Game_Engine::initWindow()
 {
-	this->videoMode = sf::VideoMode(sf::VideoMode::getDesktopMode().width * 0.5f, sf::VideoMode::getDesktopMode().height * 0.7f);
+	// sf::VideoMode::getDesktopMode().width * 0.5f, sf::VideoMode::getDesktopMode().height * 0.7f
+	this->videoMode = sf::VideoMode(900, 900);
 	this->window = new sf::RenderWindow(this->videoMode, "Template", sf::Style::Close | sf::Style::Titlebar);
 
 	this->window->setFramerateLimit(60);
@@ -24,6 +25,8 @@ void Game_Engine::initVariables()
 {
 	this->gravity = 9.8f;
 	this->drag = 0.5f;
+	this->shape = Rigid_Body_Rectangle();
+	this->circle = Rigid_Body_Circle();
 }
 
 void Game_Engine::CollisionDetection()
@@ -56,6 +59,10 @@ void Game_Engine::Update()
 void Game_Engine::Render()
 {
 	this->window->clear();
+
+	this->shape.Render(this->window);
+
+	this->circle.Render(this->window);
 
 	this->window->display();
 }

@@ -10,10 +10,11 @@ private:
 	sf::Vector2f acceleration;
 	float mass;
 	float friction;
+	bool lockedPosition;
 
 public:
 	Rigid_Body();
-	Rigid_Body(sf::Vector2f acceleration, sf::Vector2f velocity,float mass, float friction);
+	Rigid_Body(sf::Vector2f acceleration, sf::Vector2f velocity,float mass, float friction, bool lockedPosition);
 	~Rigid_Body();
 };
 

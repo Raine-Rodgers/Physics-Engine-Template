@@ -3,13 +3,15 @@
 
 Rigid_Body_Rectangle::Rigid_Body_Rectangle() : Rigid_Body()
 {
-	this->size = sf::Vector2f(20, 20);
-	this->position = sf::Vector2f(100, 100);
+	this->size = sf::Vector2f(100, 30);
+	this->position = sf::Vector2f(500, 500);
 	this->rectangle.setSize(this->size);
+	this->rectangle.setPosition(this->position);
+	this->rectangle.setFillColor(sf::Color::Red);
 }
 
-Rigid_Body_Rectangle::Rigid_Body_Rectangle(sf::Vector2f acceleration, sf::Vector2f velocity, float mass, float friction, sf::Vector2f size, sf::Vector2f position)
-: Rigid_Body(acceleration, velocity, mass, friction)
+Rigid_Body_Rectangle::Rigid_Body_Rectangle(sf::Vector2f acceleration, sf::Vector2f velocity, float mass, float friction, sf::Vector2f size, sf::Vector2f , bool lockedPosition)
+: Rigid_Body(acceleration, velocity, mass, friction, lockedPosition)
 {
 	this->size = size;
 	this->position = position;
@@ -20,4 +22,13 @@ Rigid_Body_Rectangle::Rigid_Body_Rectangle(sf::Vector2f acceleration, sf::Vector
 
 Rigid_Body_Rectangle::~Rigid_Body_Rectangle()
 {
+}
+
+void Rigid_Body_Rectangle::Update()
+{
+}
+
+void Rigid_Body_Rectangle::Render(sf::RenderWindow* window)
+{
+	window->draw(this->rectangle);
 }

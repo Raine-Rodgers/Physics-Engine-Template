@@ -27,6 +27,9 @@
     <ClCompile Include="Rigid_Body_Rectangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Rigid_Body_Circle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game_Engine.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Rigid_Body_Rectangle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rigid_Body_Circle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
