@@ -5,7 +5,7 @@
 
 class Rigid_Body
 {
-private:
+protected:
 	sf::Vector2f velocity;
 	sf::Vector2f acceleration;
 	float mass;

@@ -25,8 +25,19 @@ Rigid_Body_Circle::~Rigid_Body_Circle()
 {
 }
 
-void Rigid_Body_Circle::Update()
+// TODO: create gravity update function
+void Rigid_Body_Circle::PhysicsUpdate(float gravity)
 {
+	if (!this->lockedPosition)
+	{
+		this->velocity.y += gravity;
+	}
+	this->velocity += this->acceleration;
+}
+
+void Rigid_Body_Circle::Update(float gravity)
+{
+	this->PhysicsUpdate(gravity);
 }
 
 void Rigid_Body_Circle::Render(sf::RenderWindow* window)
