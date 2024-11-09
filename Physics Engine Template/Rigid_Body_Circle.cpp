@@ -11,8 +11,8 @@ Rigid_Body_Circle::Rigid_Body_Circle()
 	this->circle.setPosition(this->position);
 }
 
-Rigid_Body_Circle::Rigid_Body_Circle(sf::Vector2f acceleration, sf::Vector2f velocity, float mass, float friction, float radius, sf::Vector2f, bool lockedPosition)
-: Rigid_Body(acceleration, velocity, mass, friction, lockedPosition)
+Rigid_Body_Circle::Rigid_Body_Circle(sf::Vector2f acceleration, sf::Vector2f velocity, float mass, float friction, float radius, sf::Vector2f, bool lockedPosition, float terminalVelocity)
+: Rigid_Body(acceleration, velocity, mass, friction, lockedPosition, terminalVelocity)
 {
 	this->radius = radius;
 	this->position = position;
@@ -30,14 +30,23 @@ Rigid_Body_Circle::~Rigid_Body_Circle()
 void Rigid_Body_Circle::PhysicsUpdate(float gravity)
 {
 	engineTools.deltaTime = engineTools.clock.restart();
-	if (!this->lockedPosition)
+	if (this->lockedPosition)
+	{
+		return;
+	}
+
+	if (this->velocity.y < this->terminalVelocity)
 	{
 		this->velocity.y += gravity;
 		this->velocity += this->acceleration;
 		this->position = this->circle.getPosition();
-		std::cout << engineTools.deltaTime.asSeconds() << std::endl;
 		this->circle.setPosition(this->position.x, this->position.y += this->velocity.y * engineTools.deltaTime.asSeconds() * 30);
+		return;
 	}
+
+	this->velocity.y = this->terminalVelocity;
+	this->position = this->circle.getPosition();
+	this->circle.setPosition(this->position.x, this->position.y += this->velocity.y * engineTools.deltaTime.asSeconds() * 30);
 }
 
 void Rigid_Body_Circle::Update(float gravity)

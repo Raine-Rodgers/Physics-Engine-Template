@@ -10,8 +10,8 @@ Rigid_Body_Rectangle::Rigid_Body_Rectangle() : Rigid_Body()
 	this->rectangle.setFillColor(sf::Color::Red);
 }
 
-Rigid_Body_Rectangle::Rigid_Body_Rectangle(sf::Vector2f acceleration, sf::Vector2f velocity, float mass, float friction, sf::Vector2f size, sf::Vector2f , bool lockedPosition)
-: Rigid_Body(acceleration, velocity, mass, friction, lockedPosition)
+Rigid_Body_Rectangle::Rigid_Body_Rectangle(sf::Vector2f acceleration, sf::Vector2f velocity, float mass, float friction, sf::Vector2f size, sf::Vector2f position, bool lockedPosition, float terminalVelocity)
+: Rigid_Body(acceleration, velocity, mass, friction, lockedPosition, terminalVelocity)
 {
 	this->size = size;
 	this->position = position;

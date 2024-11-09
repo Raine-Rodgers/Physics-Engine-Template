@@ -13,7 +13,7 @@ private:
 
 public:
 	Rigid_Body_Circle();
-	Rigid_Body_Circle(sf::Vector2f acceleration, sf::Vector2f velocity, float mass, float friction, float radius, sf::Vector2f position, bool lockedPosition);
+	Rigid_Body_Circle(sf::Vector2f acceleration, sf::Vector2f velocity, float mass, float friction, float radius, sf::Vector2f position, bool lockedPosition, float terminalVelocity);
 	~Rigid_Body_Circle();
 
 	void PhysicsUpdate(float gravity);

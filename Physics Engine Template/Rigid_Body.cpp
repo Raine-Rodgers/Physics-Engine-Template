@@ -7,15 +7,17 @@ Rigid_Body::Rigid_Body()
 	this->mass = 1;
 	this->friction = 0.1;
 	this->lockedPosition = false;
+	this->terminalVelocity = 20.f;
 }
 
-Rigid_Body::Rigid_Body(sf::Vector2f acceleration, sf::Vector2f velocity, float mass, float friction, bool lockedPosition)
+Rigid_Body::Rigid_Body(sf::Vector2f acceleration, sf::Vector2f velocity, float mass, float friction, bool lockedPosition, float terminalVelocity)
 {
 	this->velocity = velocity;
 	this->acceleration = acceleration;
 	this->mass = mass;
 	this->friction = friction;
 	this->lockedPosition = lockedPosition;
+	this->terminalVelocity = terminalVelocity;
 }
 
 Rigid_Body::~Rigid_Body()

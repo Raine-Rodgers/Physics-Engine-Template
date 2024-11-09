@@ -24,7 +24,7 @@ void Game_Engine::initWindow()
 
 void Game_Engine::initVariables()
 {
-	this->gravity = 1.0f;
+	this->gravity = 0.2f;
 	this->drag = 0.5f;
 	this->shape = Rigid_Body_Rectangle();
 	this->circle = Rigid_Body_Circle();
