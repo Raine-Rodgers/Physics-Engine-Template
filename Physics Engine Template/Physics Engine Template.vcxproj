@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Engine_Tools.cpp" />
     <ClCompile Include="Game_Engine.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Rigid_Body.cpp" />
@@ -140,6 +141,7 @@
     <ClCompile Include="Rigid_Body_Rectangle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine_Tools.h" />
     <ClInclude Include="Game_Engine.h" />
     <ClInclude Include="Rigid_Body.h" />
     <ClInclude Include="Rigid_Body_Circle.h" />

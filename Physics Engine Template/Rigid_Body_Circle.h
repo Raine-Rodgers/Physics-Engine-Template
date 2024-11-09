@@ -1,11 +1,15 @@
 #pragma once
 #include "Rigid_Body.h"
+#include "Engine_Tools.h"
+#include <iostream>
+
 class Rigid_Body_Circle : public Rigid_Body
 {
 private:
 	sf::CircleShape circle;
 	float radius;
 	sf::Vector2f position;
+	Engine_Tools engineTools;
 
 public:
 	Rigid_Body_Circle();

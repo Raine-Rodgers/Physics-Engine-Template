@@ -6,7 +6,7 @@ Rigid_Body::Rigid_Body()
 	this->acceleration = sf::Vector2f(0, 0);
 	this->mass = 1;
 	this->friction = 0.1;
-	this->lockedPosition = true;
+	this->lockedPosition = false;
 }
 
 Rigid_Body::Rigid_Body(sf::Vector2f acceleration, sf::Vector2f velocity, float mass, float friction, bool lockedPosition)

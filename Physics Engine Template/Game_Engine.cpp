@@ -4,6 +4,7 @@
 Game_Engine::Game_Engine()
 {
 	this->initWindow();
+	this->initVariables();
 }
 
 Game_Engine::~Game_Engine()
@@ -23,7 +24,7 @@ void Game_Engine::initWindow()
 
 void Game_Engine::initVariables()
 {
-	this->gravity = 9.8f;
+	this->gravity = 1.0f;
 	this->drag = 0.5f;
 	this->shape = Rigid_Body_Rectangle();
 	this->circle = Rigid_Body_Circle();
@@ -53,6 +54,7 @@ void Game_Engine::PollEvents()
 void Game_Engine::Update()
 {
 	this->PollEvents();
+	this->circle.Update(this->gravity);
 	this->CollisionDetection();
 }
 
