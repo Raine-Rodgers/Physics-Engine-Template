@@ -40,7 +40,7 @@ void Rigid_Body_Circle::PhysicsUpdate(float gravity)
 		this->velocity.y += gravity;
 		this->velocity += this->acceleration;
 		this->position = this->circle.getPosition();
-		this->circle.setPosition(this->position.x, this->position.y += this->velocity.y * engineTools.deltaTime.asSeconds() * 30);
+		this->circle.setPosition(this->position.x, this->position.y += this->velocity.y * engineTools.deltaTime.asSeconds() * engineTools.dtMultiplier);
 		return;
 	}
 
