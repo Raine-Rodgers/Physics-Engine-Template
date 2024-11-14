@@ -5,6 +5,7 @@
 #include <SFML/System.hpp>
 #include "Rigid_Body_Rectangle.h"
 #include "Rigid_Body_Circle.h"
+#include "Engine_Tools.h"
 #include "Map1.h"
 
 class Game_Engine
@@ -18,6 +19,7 @@ private:
 	sf::Event event;
 	Rigid_Body_Rectangle shape;
 	Rigid_Body_Circle circle;
+	Engine_Tools engineTools;
 	Map1 map1;
 
 	float gravity;
@@ -28,7 +30,6 @@ public:
 	~Game_Engine();
 
 	const bool running() const { return this->window->isOpen(); }
-	void CollisionDetection();
 	void PollEvents();
 	void Update();
 	void Render();

@@ -8,8 +8,7 @@ public:
 	sf::Time deltaTime;
 	float dtMultiplier = 30.0f;
 
-	void DetectCollisionCircleToCircle(sf::CircleShape* circle1, sf::CircleShape* circle2);
-	bool IntersectPolygons(sf::Vector2f poly1, sf::Vector2f poly2);
+	bool DetectCollisionCircleToRectangle(sf::CircleShape circle, sf::RectangleShape rectangle);
 
 	Engine_Tools();
 	~Engine_Tools();

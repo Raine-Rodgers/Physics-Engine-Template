@@ -24,15 +24,12 @@ void Game_Engine::initWindow()
 
 void Game_Engine::initVariables()
 {
-	this->gravity = 0.2f;
+	this->gravity = 0.001f;
 	this->drag = 0.5f;
 	this->shape = Rigid_Body_Rectangle();
 	this->circle = Rigid_Body_Circle();
+	this->engineTools = Engine_Tools();
 	this->map1 = Map1();
-}
-
-void Game_Engine::CollisionDetection()
-{
 }
 
 void Game_Engine::PollEvents()
@@ -56,7 +53,12 @@ void Game_Engine::Update()
 {
 	this->PollEvents();
 	this->circle.Update(this->gravity);
-	this->CollisionDetection();
+	this->engineTools.DetectCollisionCircleToRectangle(this->circle.GetCircle(), this->shape.GetRectangle());
+	if (this->engineTools.DetectCollisionCircleToRectangle(this->circle.GetCircle(), this->shape.GetRectangle()))
+	{
+		this->circle.GetCircle().setFillColor(sf::Color::Red);
+	}
+	std::cout << this->engineTools.DetectCollisionCircleToRectangle(this->circle.GetCircle(), this->shape.GetRectangle()) << std::endl;
 }
 
 void Game_Engine::Render()

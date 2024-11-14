@@ -16,6 +16,7 @@ public:
 	Rigid_Body_Circle(sf::Vector2f acceleration, sf::Vector2f velocity, float mass, float friction, float radius, sf::Vector2f position, bool lockedPosition, float terminalVelocity);
 	~Rigid_Body_Circle();
 
+	sf::CircleShape GetCircle() { return this->circle; }
 	void PhysicsUpdate(float gravity);
 	void Update(float gravity);
 	void Render(sf::RenderWindow* window);

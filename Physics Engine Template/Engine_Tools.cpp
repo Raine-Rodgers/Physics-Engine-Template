@@ -9,18 +9,40 @@ Engine_Tools::~Engine_Tools()
 {
 }
 
-void Engine_Tools::DetectCollisionCircleToCircle(sf::CircleShape* circle1, sf::CircleShape* circle2)
-{
-	float distance = sqrt(pow(circle1->getPosition().x - circle2->getPosition().x, 2) + pow(circle1->getPosition().y - circle2->getPosition().y, 2));
-	float radiusSum = circle1->getRadius() + circle2->getRadius();
 
-	if (distance < radiusSum)
-	{
-		std::cout << "Collision Detected" << std::endl;
-	}
-}
-
-bool Engine_Tools::IntersectPolygons(sf::Vector2f poly1, sf::Vector2f poly2)
+bool Engine_Tools::DetectCollisionCircleToRectangle(sf::CircleShape circle, sf::RectangleShape rectangle)
 {
-	for(int i=0; i<poly1)
+    float rectHalfWidth = rectangle.getSize().x / 2;
+    float rectHalfHeight = rectangle.getSize().y / 2;
+    
+    float deltaX = circle.getPosition().x - rectangle.getPosition().x;
+    float deltaY = circle.getPosition().y - rectangle.getPosition().y;
+    
+    float circleDistanceXRotated = abs(deltaX * cos(rectangle.getRotation() * 3.14159 / 180) + deltaY * sin(rectangle.getRotation() * 3.14159 / 180));
+    float circleDistanceYRotated = abs(deltaY * cos(rectangle.getRotation() * 3.14159 / 180) - deltaX * sin(rectangle.getRotation() * 3.14159 / 180));
+    
+    if (circleDistanceXRotated > (rectHalfWidth + circle.getRadius()))
+    {
+        return false;
+    }
+    
+    if (circleDistanceYRotated > (rectHalfHeight + circle.getRadius()))
+    {
+        return false;
+    }
+    
+    if (circleDistanceXRotated <= rectHalfWidth)
+    {
+        return true;
+    }
+    
+    if (circleDistanceYRotated <= rectHalfHeight)
+    {
+        return true;
+    }
+    
+    float cornerDistanceSq = pow(circleDistanceXRotated - rectHalfWidth, 2) +
+                             pow(circleDistanceYRotated - rectHalfHeight, 2);
+    
+    return (cornerDistanceSq <= pow(circle.getRadius(), 2));
 }

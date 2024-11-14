@@ -5,10 +5,11 @@ Rigid_Body_Circle::Rigid_Body_Circle()
 {
 	this->engineTools = Engine_Tools();
 	this->radius = 20;
-	this->position = sf::Vector2f(450, 450);
+	this->position = sf::Vector2f(550, 450);
 
 	this->circle = sf::CircleShape(this->radius);
 	this->circle.setPosition(this->position);
+
 }
 
 Rigid_Body_Circle::Rigid_Body_Circle(sf::Vector2f acceleration, sf::Vector2f velocity, float mass, float friction, float radius, sf::Vector2f, bool lockedPosition, float terminalVelocity)
