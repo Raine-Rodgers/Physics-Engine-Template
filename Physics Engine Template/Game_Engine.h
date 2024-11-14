@@ -5,6 +5,7 @@
 #include <SFML/System.hpp>
 #include "Rigid_Body_Rectangle.h"
 #include "Rigid_Body_Circle.h"
+#include "Map1.h"
 
 class Game_Engine
 {
@@ -17,6 +18,7 @@ private:
 	sf::Event event;
 	Rigid_Body_Rectangle shape;
 	Rigid_Body_Circle circle;
+	Map1 map1;
 
 	float gravity;
 	float drag;

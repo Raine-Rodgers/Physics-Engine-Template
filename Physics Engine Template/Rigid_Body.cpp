@@ -6,7 +6,7 @@ Rigid_Body::Rigid_Body()
 	this->acceleration = sf::Vector2f(0, 0);
 	this->mass = 1;
 	this->friction = 0.1;
-	this->lockedPosition = false;
+	this->lockedPosition = true;
 	this->terminalVelocity = 20.f;
 }
 

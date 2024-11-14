@@ -28,6 +28,7 @@ void Game_Engine::initVariables()
 	this->drag = 0.5f;
 	this->shape = Rigid_Body_Rectangle();
 	this->circle = Rigid_Body_Circle();
+	this->map1 = Map1();
 }
 
 void Game_Engine::CollisionDetection()
@@ -65,6 +66,8 @@ void Game_Engine::Render()
 	this->shape.Render(this->window);
 
 	this->circle.Render(this->window);
+
+	this->map1.Render(this->window);
 
 	this->window->display();
 }
