@@ -15,6 +15,7 @@ protected:
 
 public:
 	Rigid_Body();
+	Rigid_Body(bool lockedPosition);
 	Rigid_Body(sf::Vector2f acceleration, sf::Vector2f velocity,float mass, float friction, bool lockedPosition, float terminalVelocity);
 	~Rigid_Body();
 };

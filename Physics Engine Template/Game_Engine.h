@@ -6,7 +6,6 @@
 #include "Rigid_Body_Rectangle.h"
 #include "Rigid_Body_Circle.h"
 #include "Engine_Tools.h"
-#include "Map1.h"
 
 class Game_Engine
 {
@@ -17,10 +16,12 @@ private:
 	sf::VideoMode videoMode;
 	sf::RenderWindow* window;
 	sf::Event event;
-	Rigid_Body_Rectangle shape;
-	Rigid_Body_Circle circle;
 	Engine_Tools engineTools;
-	Map1 map1;
+
+	// test variables
+	Rigid_Body_Rectangle* rectangleA;
+	Rigid_Body_Rectangle* rectangleB;
+	//
 
 	float gravity;
 	float drag;

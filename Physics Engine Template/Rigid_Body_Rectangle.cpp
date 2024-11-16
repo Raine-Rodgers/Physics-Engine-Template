@@ -8,7 +8,16 @@ Rigid_Body_Rectangle::Rigid_Body_Rectangle() : Rigid_Body()
 	this->rectangle.setSize(this->size);
 	this->rectangle.setPosition(this->position);
 	this->rectangle.setFillColor(sf::Color::Red);
-	this->rectangle.setRotation(45);
+}
+
+Rigid_Body_Rectangle::Rigid_Body_Rectangle(bool lockedPosition, sf::Vector2f position, float rotation) : Rigid_Body(lockedPosition)
+{
+	this->size = sf::Vector2f(100, 30);
+	this->position = position;
+	this->rectangle.setSize(this->size);
+	this->rectangle.setPosition(this->position);
+	this->rectangle.setFillColor(sf::Color::Red);
+	this->rectangle.setRotation(rotation);
 }
 
 Rigid_Body_Rectangle::Rigid_Body_Rectangle(sf::Vector2f acceleration, sf::Vector2f velocity, float mass, float friction, sf::Vector2f size, sf::Vector2f position, bool lockedPosition, float terminalVelocity)
@@ -25,8 +34,31 @@ Rigid_Body_Rectangle::~Rigid_Body_Rectangle()
 {
 }
 
-void Rigid_Body_Rectangle::Update()
+void Rigid_Body_Rectangle::PhysicsUpdate(float gravity)
 {
+	engineTools.deltaTime = engineTools.clock.restart();
+	if (this->lockedPosition)
+	{
+		return;
+	}
+
+	if (this->velocity.y < this->terminalVelocity)
+	{
+		this->velocity.y += gravity;
+		this->velocity += this->acceleration;
+		this->position = this->rectangle.getPosition();
+		this->rectangle.setPosition(this->position.x, this->position.y += this->velocity.y * engineTools.deltaTime.asSeconds() * engineTools.dtMultiplier);
+		return;
+	}
+
+	this->velocity.y = this->terminalVelocity;
+	this->position = this->rectangle.getPosition();
+	this->rectangle.setPosition(this->position.x, this->position.y += this->velocity.y * engineTools.deltaTime.asSeconds() * 30);
+}
+
+void Rigid_Body_Rectangle::Update(float gravity)
+{
+	PhysicsUpdate(gravity);
 }
 
 void Rigid_Body_Rectangle::Render(sf::RenderWindow* window)
