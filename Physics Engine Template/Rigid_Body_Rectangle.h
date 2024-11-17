@@ -16,7 +16,17 @@ public:
 	Rigid_Body_Rectangle(sf::Vector2f acceleration, sf::Vector2f velocity, float mass, float friction, sf::Vector2f size, sf::Vector2f position, bool lockedPosition, float terminalVelocity);
 	~Rigid_Body_Rectangle();
 
-	sf::RectangleShape GetRectangle() { return this->rectangle; }
+	// Accessors and Modifiers
+	sf::RectangleShape	GetRectangle() { return this->rectangle; }
+	sf::Vector2f		GetSize() { return this->size; }
+	sf::Vector2f		GetPosition() { return this->position; }
+	sf::Vector2f		GetTransformedPoint(int index);
+	sf::Vector2f		GetPoint(int index) { return this->rectangle.getPoint(index); }
+
+	void				SetColor(sf::Color color);
+	void				SetSize(sf::Vector2f size) { this->size = size; }
+	void				SetPosition(sf::Vector2f position) { this->position = position; }
+
 	void PhysicsUpdate(float gravity);
 	void Update(float gravity);
 	void Render(sf::RenderWindow* window);

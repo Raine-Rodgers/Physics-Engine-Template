@@ -38,7 +38,6 @@ Rigid_Body_Circle::~Rigid_Body_Circle()
 {
 }
 
-// TODO: create gravity update function
 void Rigid_Body_Circle::PhysicsUpdate(float gravity)
 {
 	engineTools.deltaTime = engineTools.clock.restart();
@@ -52,14 +51,22 @@ void Rigid_Body_Circle::PhysicsUpdate(float gravity)
 		this->velocity.y += gravity;
 		this->velocity += this->acceleration;
 		this->position = this->circle.getPosition();
-		this->circle.setPosition(this->position.x, this->position.y += this->velocity.y * engineTools.deltaTime.asSeconds() * engineTools.dtMultiplier);
+		this->circle.move(this->velocity * engineTools.deltaTime.asSeconds() * engineTools.dtMultiplier);
+		//this->circle.setPosition(this->position.x, this->position.y += this->velocity.y * engineTools.deltaTime.asSeconds() * engineTools.dtMultiplier);
 		return;
 	}
 
 	this->velocity.y = this->terminalVelocity;
 	this->position = this->circle.getPosition();
-	this->circle.setPosition(this->position.x, this->position.y += this->velocity.y * engineTools.deltaTime.asSeconds() * 30);
+	this->circle.move(this->velocity * engineTools.deltaTime.asSeconds() * engineTools.dtMultiplier);
 }
+
+// Accessors and Modifiers
+void Rigid_Body_Circle::SetColor(sf::Color color)
+{
+	this->circle.setFillColor(color);
+}
+
 
 void Rigid_Body_Circle::Update(float gravity)
 {
@@ -70,3 +77,5 @@ void Rigid_Body_Circle::Render(sf::RenderWindow* window)
 {
 	window->draw(this->circle);
 }
+
+

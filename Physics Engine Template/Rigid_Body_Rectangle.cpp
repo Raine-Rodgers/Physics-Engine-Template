@@ -34,6 +34,18 @@ Rigid_Body_Rectangle::~Rigid_Body_Rectangle()
 {
 }
 
+sf::Vector2f Rigid_Body_Rectangle::GetTransformedPoint(int index)
+{
+	sf::Vector2f temp1 = this->rectangle.getTransform().transformPoint(this->rectangle.getPoint(1));
+	std::cout << this->rectangle.getTransform().transformPoint(this->rectangle.getPoint(1)).y << std::endl;
+	return temp1;
+}
+
+void Rigid_Body_Rectangle::SetColor(sf::Color color)
+{
+	this->rectangle.setFillColor(color);
+}
+
 void Rigid_Body_Rectangle::PhysicsUpdate(float gravity)
 {
 	engineTools.deltaTime = engineTools.clock.restart();
@@ -47,13 +59,16 @@ void Rigid_Body_Rectangle::PhysicsUpdate(float gravity)
 		this->velocity.y += gravity;
 		this->velocity += this->acceleration;
 		this->position = this->rectangle.getPosition();
-		this->rectangle.setPosition(this->position.x, this->position.y += this->velocity.y * engineTools.deltaTime.asSeconds() * engineTools.dtMultiplier);
+		this->rectangle.move(this->velocity * engineTools.deltaTime.asSeconds() * engineTools.dtMultiplier);
+		this->rectangle.getGlobalBounds().intersects(this->rectangle.getGlobalBounds());
+
 		return;
 	}
 
 	this->velocity.y = this->terminalVelocity;
 	this->position = this->rectangle.getPosition();
-	this->rectangle.setPosition(this->position.x, this->position.y += this->velocity.y * engineTools.deltaTime.asSeconds() * 30);
+	this->rectangle.move(this->velocity * engineTools.deltaTime.asSeconds() * engineTools.dtMultiplier);
+	
 }
 
 void Rigid_Body_Rectangle::Update(float gravity)

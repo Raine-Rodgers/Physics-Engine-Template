@@ -32,6 +32,7 @@ public:
 
 	const bool running() const { return this->window->isOpen(); }
 	void PollEvents();
+	void PhysicsUpdate();
 	void Update();
 	void Render();
 };

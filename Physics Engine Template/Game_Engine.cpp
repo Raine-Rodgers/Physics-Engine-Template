@@ -28,7 +28,9 @@ void Game_Engine::initVariables()
 	this->drag = 0.5f;
 	this->engineTools = Engine_Tools();
 	this->rectangleA = new Rigid_Body_Rectangle(true, sf::Vector2f(200, 500), 0);
+	this->rectangleA->SetColor(sf::Color::Green);
 	this->rectangleB = new Rigid_Body_Rectangle(false, sf::Vector2f(200, 300), 0);
+	this->rectangleB->SetColor(sf::Color::Blue);
 }
 
 void Game_Engine::PollEvents()
@@ -48,8 +50,18 @@ void Game_Engine::PollEvents()
 	}
 }
 
+
+void Game_Engine::PhysicsUpdate()
+{
+	sf::Vector2f point(0.f, 0.f);
+	sf::Vector2f transformedPoint = this->rectangleA->GetTransformedPoint(0);
+	
+}
+
+
 void Game_Engine::Update()
 {
+	this->PhysicsUpdate();
 	this->rectangleA->Update(this->gravity);
 	this->rectangleB->Update(this->gravity);
 	this->PollEvents();
@@ -65,3 +77,4 @@ void Game_Engine::Render()
 
 	this->window->display();
 }
+
