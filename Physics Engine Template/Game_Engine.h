@@ -21,6 +21,7 @@ private:
 	// test variables
 	Rigid_Body_Rectangle* rectangleA;
 	Rigid_Body_Rectangle* rectangleB;
+	Rigid_Body_Rectangle* rectangleC;
 	//
 
 	float gravity;
