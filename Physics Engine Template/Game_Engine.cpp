@@ -64,9 +64,6 @@ void Game_Engine::Update()
 	this->rectangleA->Update(this->gravity);
 	this->rectangleB->Update(this->gravity);
 	this->PollEvents();
-	//std::cout << 
-	this->rectangleA->GetPosition();
-
 }
 
 void Game_Engine::Render()
@@ -76,7 +73,6 @@ void Game_Engine::Render()
 	this->rectangleA->Render(this->window);
 
 	this->rectangleB->Render(this->window);
-
 
 	this->window->display();
 }

@@ -27,7 +27,8 @@ public:
 	void				SetColor(sf::Color color);
 	void				SetSize(sf::Vector2f size) { this->size = size; }
 	void				SetPosition(sf::Vector2f position) { this->position = position; }
-
+	
+	// no use function purely for testing
 	void ThrowThings();
 
 	void PhysicsUpdate(float gravity);
