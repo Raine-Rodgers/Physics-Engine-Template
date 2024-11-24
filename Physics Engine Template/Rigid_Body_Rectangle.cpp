@@ -41,9 +41,15 @@ sf::Vector2f Rigid_Body_Rectangle::GetPosition()
 	return this->position;
 }
 
-sf::Vector2f Rigid_Body_Rectangle::GetTransformedPoint(int index)
+std::vector<sf::Vector2f> Rigid_Body_Rectangle::GetVertices(int vertexCount)
 {
-	return this->rectangle.getTransform().transformPoint(this->rectangle.getPoint(index));
+	std::vector<sf::Vector2f> vertices;
+	for (int i = 0; i < vertexCount; i++)
+	{
+		vertices.push_back (this->rectangle.getTransform().transformPoint(this->rectangle.getPoint(i)));
+		//std::cout << vertices[i].x << " " << vertices[i].y << std::endl;
+	}
+	return vertices;
 }
 
 void Rigid_Body_Rectangle::SetColor(sf::Color color)

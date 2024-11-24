@@ -46,6 +46,8 @@ void Game_Engine::PollEvents()
 			case sf::Event::KeyPressed:
 				if(this->event.key.code == sf::Keyboard::Escape)
 					this->window->close();
+				if (this->event.key.code == sf::Keyboard::W)
+					PhysicsUpdate();
 				break;
 		}
 	}
@@ -54,16 +56,18 @@ void Game_Engine::PollEvents()
 
 void Game_Engine::PhysicsUpdate()
 {
-
+	std::vector<sf::Vector2f> verticesA = this->rectangleA->GetVertices(this->rectangleA->GetPointCount());
+	std::vector<sf::Vector2f> verticesB = this->rectangleB->GetVertices(this->rectangleB->GetPointCount());
+	if (engineTools.SATPolygonCollision(verticesA, verticesB)) { rectangleB->SetVelocity(sf::Vector2f(0, 0)); }
 }
 
 
 void Game_Engine::Update()
 {
-	this->PhysicsUpdate();
+	PhysicsUpdate();
 	this->rectangleA->Update(this->gravity);
 	this->rectangleB->Update(this->gravity);
-	this->PollEvents();
+	PollEvents();
 }
 
 void Game_Engine::Render()

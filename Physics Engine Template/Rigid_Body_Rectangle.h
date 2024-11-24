@@ -18,18 +18,20 @@ public:
 
 	// Accessors and Modifiers
 	
-	sf::RectangleShape	GetRectangle() { return this->rectangle; }
-	sf::Vector2f		GetSize() { return this->size; }
-	sf::Vector2f		GetPosition();
-	sf::Vector2f		GetTransformedPoint(int index);
-	sf::Vector2f		GetPoint(int index) { return this->rectangle.getPoint(index); }
+	sf::RectangleShape				GetRectangle() { return this->rectangle; }
+	sf::Vector2f					GetSize() { return this->size; }
+	sf::Vector2f					GetPosition();
+	std::vector<sf::Vector2f>		GetVertices(int vertexCount);
+	int								GetPointCount() { return this->rectangle.getPointCount(); }
 
-	void				SetColor(sf::Color color);
-	void				SetSize(sf::Vector2f size) { this->size = size; }
-	void				SetPosition(sf::Vector2f position) { this->position = position; }
+	void							SetColor(sf::Color color);
+	void							SetSize(sf::Vector2f size) { this->size = size; }
+	void							SetPosition(sf::Vector2f position) { this->position = position; }
 	
 	// no use function purely for testing
 	void ThrowThings();
+
+	// Update Functions
 
 	void PhysicsUpdate(float gravity);
 	void Update(float gravity);

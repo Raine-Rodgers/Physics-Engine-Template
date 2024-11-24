@@ -17,20 +17,21 @@ bool Engine_Tools::SATPolygonCollision(std::vector<sf::Vector2f> verticesA, std:
     float minB = 0;
     float maxB = 0;
 
-    for (int i = 0; i < verticesA.size(); i++) 
+    for (int i = 0; i < verticesA.size(); i++) // loops through all the vertices of the first polygon
     {
         sf::Vector2f edgeVertexA = verticesA[i];
-        sf::Vector2f edgeVertexB = verticesA[(i + 1) % verticesA.size()];
+        sf::Vector2f edgeVertexB = verticesA[(i + 1) % verticesA.size()]; // finds 2 connected vertices to calculate normal with
 
         sf::Vector2f edge = edgeVertexB - edgeVertexA;
         sf::Vector2f axis = sf::Vector2f(-edge.y, edge.x);
 
         ProjectVerticesToAxis(verticesA, axis, minA, maxA);
-        ProjectVerticesToAxis(verticesB, axis, minB, maxB);
+        ProjectVerticesToAxis(verticesB, axis, minB, maxB); // projects both polygons to the axis and returns their min and max values to check for overlap
 
         if (minA > maxB || minB > maxA)
         {
-			return false;
+            std::cout << "nothing" << std::endl; // this is just for testing purposes
+			return false; //if any gap is detected then the loop breaks immediately
 		}
     }
     //////////////////// Vertices B Loop ////////////////////
@@ -48,10 +49,12 @@ bool Engine_Tools::SATPolygonCollision(std::vector<sf::Vector2f> verticesA, std:
 
         if (minA > maxB || minB > maxA)
         {
+            std::cout << "nothing" << std::endl; // this is just for testing purposes
             return false;
         }
     }
     
+    std::cout << "Something" << std::endl; // this is just for testing purposes
     return true;
 }
 
