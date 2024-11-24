@@ -24,13 +24,15 @@ void Game_Engine::initWindow()
 
 void Game_Engine::initVariables()
 {
-	this->gravity = 0.1f;
-	this->drag = 0.5f;
-	this->engineTools = Engine_Tools();
-	this->rectangleA = new Rigid_Body_Rectangle(true, sf::Vector2f(200, 500), 0);
-	this->rectangleA->SetColor(sf::Color::Green);
-	this->rectangleB = new Rigid_Body_Rectangle(false, sf::Vector2f(200, 300), 0);
-	this->rectangleB->SetColor(sf::Color::Blue);
+	gravity = 0.1f;
+	drag = 0.5f;
+	engineTools = Engine_Tools();
+	rectangleA = new Rigid_Body_Rectangle(true, sf::Vector2f(200, 500), 0);
+	rectangleA->SetColor(sf::Color::Green);
+	rectangleA->SetRotation(45);
+	rectangleA->SetPosition(sf::Vector2f(150, 500));
+	rectangleB = new Rigid_Body_Rectangle(false, sf::Vector2f(200, 300), 0);
+	rectangleB->SetColor(sf::Color::Blue);
 
 }
 
@@ -56,17 +58,17 @@ void Game_Engine::PollEvents()
 
 void Game_Engine::PhysicsUpdate()
 {
-	std::vector<sf::Vector2f> verticesA = this->rectangleA->GetVertices(this->rectangleA->GetPointCount());
-	std::vector<sf::Vector2f> verticesB = this->rectangleB->GetVertices(this->rectangleB->GetPointCount());
-	if (engineTools.SATPolygonCollision(verticesA, verticesB)) { rectangleB->SetVelocity(sf::Vector2f(0, 0)); }
+	std::vector<sf::Vector2f> verticesA = rectangleA->GetVertices(rectangleA->GetPointCount());
+	std::vector<sf::Vector2f> verticesB = rectangleB->GetVertices(rectangleB->GetPointCount());
+	if (engineTools.SATPolygonCollision(verticesA, verticesB)) { rectangleB->SetVelocity(sf::Vector2f(0, 0)); gravity = 0.f; }
 }
 
 
 void Game_Engine::Update()
 {
 	PhysicsUpdate();
-	this->rectangleA->Update(this->gravity);
-	this->rectangleB->Update(this->gravity);
+	this->rectangleA->Update(gravity);
+	this->rectangleB->Update(gravity);
 	PollEvents();
 }
 
@@ -74,9 +76,9 @@ void Game_Engine::Render()
 {
 	this->window->clear();
 
-	this->rectangleA->Render(this->window);
+	rectangleA->Render(this->window);
 
-	this->rectangleB->Render(this->window);
+	rectangleB->Render(this->window);
 
 	this->window->display();
 }

@@ -26,7 +26,8 @@ public:
 
 	void							SetColor(sf::Color color);
 	void							SetSize(sf::Vector2f size) { this->size = size; }
-	void							SetPosition(sf::Vector2f position) { this->position = position; }
+	void							SetPosition(sf::Vector2f position) { this->position = position; this->rectangle.setPosition(position); }
+	void							SetRotation(float rotation) { this->rectangle.setRotation(rotation); }
 	
 	// no use function purely for testing
 	void ThrowThings();
