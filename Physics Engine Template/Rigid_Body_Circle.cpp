@@ -12,8 +12,8 @@ Rigid_Body_Circle::Rigid_Body_Circle()
 
 }
 
-Rigid_Body_Circle::Rigid_Body_Circle(bool lockedPosition)
-	: Rigid_Body(lockedPosition)
+Rigid_Body_Circle::Rigid_Body_Circle(bool lockedPosition, bool collidable)
+	: Rigid_Body(lockedPosition, collidable)
 {
 	this->engineTools = Engine_Tools();
 	this->radius = 20;
@@ -23,8 +23,8 @@ Rigid_Body_Circle::Rigid_Body_Circle(bool lockedPosition)
 	this->circle.setPosition(this->position);
 }
 
-Rigid_Body_Circle::Rigid_Body_Circle(sf::Vector2f acceleration, sf::Vector2f velocity, float mass, float friction, float radius, sf::Vector2f, bool lockedPosition, float terminalVelocity)
-: Rigid_Body(acceleration, velocity, mass, friction, lockedPosition, terminalVelocity)
+Rigid_Body_Circle::Rigid_Body_Circle(sf::Vector2f acceleration, sf::Vector2f velocity, float mass, float friction, float radius, sf::Vector2f, bool lockedPosition, bool collidable, float terminalVelocity)
+: Rigid_Body(acceleration, velocity, mass, friction, lockedPosition, terminalVelocity, collidable)
 {
 	this->radius = radius;
 	this->position = position;

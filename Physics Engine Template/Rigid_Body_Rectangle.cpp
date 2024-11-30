@@ -10,7 +10,7 @@ Rigid_Body_Rectangle::Rigid_Body_Rectangle() : Rigid_Body()
 	this->rectangle.setFillColor(sf::Color::Red);
 }
 
-Rigid_Body_Rectangle::Rigid_Body_Rectangle(bool lockedPosition, sf::Vector2f position, float rotation) : Rigid_Body(lockedPosition)
+Rigid_Body_Rectangle::Rigid_Body_Rectangle(bool lockedPosition, bool collidable, sf::Vector2f position, float rotation) : Rigid_Body(lockedPosition, collidable)
 {
 	this->size = sf::Vector2f(100, 30);
 	this->position = position;
@@ -20,8 +20,8 @@ Rigid_Body_Rectangle::Rigid_Body_Rectangle(bool lockedPosition, sf::Vector2f pos
 	this->rectangle.setRotation(rotation);
 }
 
-Rigid_Body_Rectangle::Rigid_Body_Rectangle(sf::Vector2f acceleration, sf::Vector2f velocity, float mass, float friction, sf::Vector2f size, sf::Vector2f position, bool lockedPosition, float terminalVelocity)
-: Rigid_Body(acceleration, velocity, mass, friction, lockedPosition, terminalVelocity)
+Rigid_Body_Rectangle::Rigid_Body_Rectangle(sf::Vector2f acceleration, sf::Vector2f velocity, float mass, float friction, sf::Vector2f size, sf::Vector2f position, bool lockedPosition, bool collidable, float terminalVelocity)
+: Rigid_Body(acceleration, velocity, mass, friction, lockedPosition, terminalVelocity, collidable)
 {
 	this->size = size;
 	this->position = position;
@@ -47,7 +47,6 @@ std::vector<sf::Vector2f> Rigid_Body_Rectangle::GetVertices(int vertexCount)
 	for (int i = 0; i < vertexCount; i++)
 	{
 		vertices.push_back (this->rectangle.getTransform().transformPoint(this->rectangle.getPoint(i)));
-		//std::cout << vertices[i].x << " " << vertices[i].y << std::endl;
 	}
 	return vertices;
 }

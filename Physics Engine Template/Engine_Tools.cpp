@@ -10,12 +10,16 @@ Engine_Tools::~Engine_Tools()
 }
 
 
-bool Engine_Tools::SATPolygonCollision(std::vector<sf::Vector2f> verticesA, std::vector<sf::Vector2f> verticesB)
+////////////////////// COLLISION FUNCTIONS //////////////////////
+
+bool Engine_Tools::SATPolygonCollision(std::vector<sf::Vector2f> verticesA, std::vector<sf::Vector2f> verticesB, sf::Vector2f& normal, float& depth)
 {
-    float minA = 0;
-    float maxA = 0;
-    float minB = 0;
-    float maxB = 0;
+    float minA;
+    float maxA;
+    float minB;
+    float maxB;
+    normal = sf::Vector2f(0, 0);
+    depth = float(INT_MAX);
 
     for (int i = 0; i < verticesA.size(); i++) // loops through all the vertices of the first polygon
     {
@@ -30,9 +34,17 @@ bool Engine_Tools::SATPolygonCollision(std::vector<sf::Vector2f> verticesA, std:
 
         if (minA > maxB || minB > maxA)
         {
-            std::cout << "nothing" << std::endl; // this is just for testing purposes
 			return false; //if any gap is detected then the loop breaks immediately
 		}
+
+        float axisDepth = MinValue(maxB - minA, maxA - minB); // calculates the depth of the overlap
+
+        if (axisDepth < depth) // if the depth is smaller than the current depth then it updates the depth and normal
+		{
+			depth = axisDepth;
+			normal = axis;
+		}
+
     }
     //////////////////// Vertices B Loop ////////////////////
 
@@ -49,14 +61,34 @@ bool Engine_Tools::SATPolygonCollision(std::vector<sf::Vector2f> verticesA, std:
 
         if (minA > maxB || minB > maxA)
         {
-            std::cout << "nothing" << std::endl; // this is just for testing purposes
             return false;
         }
+
+        float axisDepth = MinValue(maxB - minA, maxA - minB); // calculates the depth of the overlap
+
+        if (axisDepth < depth) // if the depth is smaller than the current depth then it updates the depth and normal
+        {
+            depth = axisDepth;
+            normal = axis;
+        }
     }
-    
-    std::cout << "Something" << std::endl; // this is just for testing purposes
+
+    depth /= Length(normal);
+    normal = Normalize(normal);
+
+    sf::Vector2f centerA = ArithmaticMean(verticesA);
+    sf::Vector2f centerB = ArithmaticMean(verticesB);
+
+    sf::Vector2f centerDirection = centerA - centerB;
+
+    if (DotProduct(centerDirection, normal) < 0.f)
+	{
+		normal = -normal;
+	}
+
     return true;
 }
+
 
 void Engine_Tools::ProjectVerticesToAxis(std::vector<sf::Vector2f> vertices, sf::Vector2f axis, float& min, float& max)
 {
@@ -73,46 +105,50 @@ void Engine_Tools::ProjectVerticesToAxis(std::vector<sf::Vector2f> vertices, sf:
 	}
 }
 
-//{
-//	sf::Vector2f p1 = verticesA[i];
-//	sf::Vector2f p2 = verticesA[(i + 1) % verticesA.size()];
-//	sf::Vector2f normal = sf::Vector2f(p2.y - p1.y, p1.x - p2.x);
-//	float minA = 0;
-//	float maxA = 0;
-//	for (int j = 0; j < verticesA.size(); j++)
-//	{
-//		float projected = normal.x * verticesA[j].x + normal.y * verticesA[j].y;
-//		if (j == 0)
-//		{
-//			minA = projected;
-//			maxA = projected;
-//		}
-//		else
-//		{
-//			if (projected < minA)
-//				minA = projected;
-//			if (projected > maxA)
-//				maxA = projected;
-//		}
-//	}
-//	float minB = 0;
-//	float maxB = 0;
-//	for (int j = 0; j < verticesB.size(); j++)
-//	{
-//		float projected = normal.x * verticesB[j].x + normal.y * verticesB[j].y;
-//		if (j == 0)
-//		{
-//			minB = projected;
-//			maxB = projected;
-//		}
-//		else
-//		{
-//			if (projected < minB)
-//				minB = projected;
-//			if (projected > maxB)
-//				maxB = projected;
-//		}
-//	}
-//	if (maxA < minB || maxB < minA)
-//		return false;
-//}
+
+
+
+////////////////////// MATH FUNCTIONS //////////////////////
+
+float Engine_Tools::MinValue(float a, float b)
+{
+    if (a < b) { return a; }
+	else { return b; }
+}
+
+float Engine_Tools::MaxValue(float a, float b)
+{
+    if (a > b) return a;
+	else return b;
+}
+
+float Engine_Tools::DotProduct(sf::Vector2f a, sf::Vector2f b)
+{
+    return a.x * b.x + a.y * b.y;
+}
+
+float Engine_Tools::Length(sf::Vector2f a)
+{
+    return sqrt(a.x * a.x + a.y * a.y);
+}
+
+sf::Vector2f Engine_Tools::Normalize(sf::Vector2f a)
+{
+    float invLen = 1.f / sqrt(a.x * a.x + a.y * a.y);
+    return sf::Vector2f(a.x * invLen, a.y * invLen);
+}
+
+sf::Vector2f Engine_Tools::ArithmaticMean(std::vector<sf::Vector2f> vertices)
+{
+    float sumX = 0;
+    float sumY = 0;
+
+    for(int i = 0; i < vertices.size(); i++)
+	{
+		sf::Vector2f currentVertex = vertices[i];
+        sumX += currentVertex.x;
+        sumY += currentVertex.y;
+	}
+
+	return sf::Vector2f(sumX / vertices.size(), sumY / vertices.size());
+}

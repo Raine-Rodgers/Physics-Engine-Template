@@ -12,8 +12,8 @@ private:
 	
 public:
 	Rigid_Body_Rectangle();
-	Rigid_Body_Rectangle(bool lockedPosition, sf::Vector2f position, float rotation);
-	Rigid_Body_Rectangle(sf::Vector2f acceleration, sf::Vector2f velocity, float mass, float friction, sf::Vector2f size, sf::Vector2f position, bool lockedPosition, float terminalVelocity);
+	Rigid_Body_Rectangle(bool lockedPosition, bool collidable, sf::Vector2f position, float rotation);
+	Rigid_Body_Rectangle(sf::Vector2f acceleration, sf::Vector2f velocity, float mass, float friction, sf::Vector2f size, sf::Vector2f position, bool lockedPosition, bool collidable, float terminalVelocity);
 	~Rigid_Body_Rectangle();
 
 	// Accessors and Modifiers

@@ -34,6 +34,7 @@ public:
 	const bool running() const { return this->window->isOpen(); }
 	void PollEvents();
 	void PhysicsUpdate();
+	void CollisionUpdate();
 	void Update();
 	void Render();
 };

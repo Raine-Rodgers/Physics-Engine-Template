@@ -4,16 +4,20 @@
 class Engine_Tools
 {
 private:
-	void ProjectVerticesToAxis(std::vector<sf::Vector2f> vertices, sf::Vector2f axis, float& min, float& max); // projects an array of vertices to an axis and find if theres an overlap
-	float DotProduct(sf::Vector2f a, sf::Vector2f b) { return a.x * b.x + a.y * b.y; } // find the dot product of two vectors
+	void				ProjectVerticesToAxis(std::vector<sf::Vector2f> vertices, sf::Vector2f axis, float& min, float& max); // projects an array of vertices to an axis and find if theres an overlap
 
 public:
-	sf::Clock clock;
-	sf::Time deltaTime;			// Delta time
-	float dtMultiplier = 30.0f; // Delta time multiplier
+	sf::Clock			clock;
+	sf::Time			deltaTime;			// Delta time
+	float				dtMultiplier = 30.0f; // Delta time multiplier
 
-	// Uses separating axis theorem to check if two polygons are colliding
-	bool SATPolygonCollision(std::vector<sf::Vector2f> verticesA, std::vector<sf::Vector2f> verticesB);
+	bool				SATPolygonCollision(std::vector<sf::Vector2f> verticesA, std::vector<sf::Vector2f> verticesB, sf::Vector2f& normal, float& depth); // Uses separating axis theorem to check if two polygons are colliding
+	float				MinValue(float a, float b);
+	float				MaxValue(float a, float b);
+	float				DotProduct(sf::Vector2f a, sf::Vector2f b);
+	float				Length(sf::Vector2f a);
+	sf::Vector2f		Normalize(sf::Vector2f a);
+	sf::Vector2f		ArithmaticMean(std::vector<sf::Vector2f> vertices);
 
 	Engine_Tools();
 	~Engine_Tools();

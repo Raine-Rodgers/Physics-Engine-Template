@@ -12,6 +12,7 @@ protected:
 	float			mass;
 	float			friction;
 	bool			lockedPosition;
+	bool			collidable;
 
 public:
 
@@ -22,6 +23,7 @@ public:
 	float			GetMass()				{ return this->mass; }
 	float			GetFriction()			{ return this->friction; }
 	bool			GetLockedPosition()		{ return this->lockedPosition; }
+	bool			GetCollidable()			{ return this->collidable; }
 
 	void			SetVelocity(sf::Vector2f velocity)				{ this->velocity = velocity; }
 	void			SetAcceleration(sf::Vector2f acceleration)		{ this->acceleration = acceleration; }
@@ -29,11 +31,12 @@ public:
 	void			SetMass(float mass)								{ this->mass = mass; }
 	void			SetFriction(float friction)						{ this->friction = friction; }
 	void			SetLockedPosition(bool lockedPosition)			{ this->lockedPosition = lockedPosition; }
+	void			SetCollidable(bool collidable)					{ this->collidable = collidable; }
 
 	// Constructors and Destructors
 	Rigid_Body();
-	Rigid_Body(bool lockedPosition);
-	Rigid_Body(sf::Vector2f acceleration, sf::Vector2f velocity,float mass, float friction, bool lockedPosition, float terminalVelocity);
+	Rigid_Body(bool lockedPosition, bool collidable);
+	Rigid_Body(sf::Vector2f acceleration, sf::Vector2f velocity,float mass, float friction, bool lockedPosition, float terminalVelocity, bool collidable);
 	~Rigid_Body();
 };
 
