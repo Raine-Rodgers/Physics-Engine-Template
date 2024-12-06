@@ -24,8 +24,8 @@ void Game_Engine::initWindow()
 
 void Game_Engine::initVariables()
 {
-	gravity = 0.15f;
-	drag = 0.9f; // higher number = less drag
+	gravity = 0.1f;
+	drag = 0.95f; // higher number = less drag
 	engineTools = Engine_Tools();
 	rectangleA = new Rigid_Body_Rectangle(true, true, sf::Vector2f(200, 500), 0);
 	rectangleA->SetColor(sf::Color::Green);
@@ -60,7 +60,7 @@ void Game_Engine::PhysicsUpdate()
 {
 	sf::Vector2f rectBvel = sf::Vector2f(rectangleB->GetVelocity().x * drag, rectangleB->GetVelocity().y * drag);
 	rectangleB->SetVelocity(rectBvel);
-	if (rectangleB->GetVelocity().x < 0.001f) // this is so janked. for some reason it thinks that 0.1 < 0.001 is true but 0.1 <= 0.001 is false. it works somewhat at least ig
+	if (rectangleB->GetVelocity().x < 0.001f) // either this is janked or my math is terrible but either way i hate it
 	{
 		rectangleB->SetVelocity(sf::Vector2f(0, rectangleB->GetVelocity().y)); // if the velocity is below a certain value set it to 0 to reduce compuation amount
 		std::cout << "it happened" << std::endl;

@@ -65,24 +65,24 @@ void Rigid_Body_Rectangle::ThrowThings()
 void Rigid_Body_Rectangle::PhysicsUpdate(float gravity)
 {
 	engineTools.deltaTime = engineTools.clock.restart();
-	if (this->lockedPosition)
+	if (lockedPosition)
 	{
 		return;
 	}
 
-	if (this->velocity.y < this->terminalVelocity)
+	if (velocity.y < terminalVelocity) // apparently removing this-> fixes the issue where the velocity is not set to 0 when using a low gravity value. No clue why tbh
 	{
-		this->velocity.y += gravity;
-		this->velocity += this->acceleration;
-		this->position = this->rectangle.getPosition();
-		this->rectangle.move(this->velocity * engineTools.deltaTime.asSeconds() * engineTools.dtMultiplier);
+		velocity.y += gravity;
+		velocity += acceleration;
+		position = rectangle.getPosition();
+		rectangle.move(velocity * engineTools.deltaTime.asSeconds() * engineTools.dtMultiplier);
 
 		return;
 	}
 
-	this->velocity.y = this->terminalVelocity;
-	this->position = this->rectangle.getPosition();
-	this->rectangle.move(this->velocity * engineTools.deltaTime.asSeconds() * engineTools.dtMultiplier);
+	velocity.y = terminalVelocity;
+	position = rectangle.getPosition();
+	rectangle.move(velocity * engineTools.deltaTime.asSeconds() * engineTools.dtMultiplier);
 	
 }
 
