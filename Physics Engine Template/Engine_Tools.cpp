@@ -141,6 +141,18 @@ bool Engine_Tools::SATCircleToPolyCollision(sf::Vector2f circleCenter, float cir
         normal = axis;
     }
 
+    depth /= Length(normal);
+    normal = Normalize(normal);
+
+    sf::Vector2f polygonCenter = ArithmaticMean(vertices);
+
+    sf::Vector2f centerDirection = polygonCenter - circleCenter;
+
+    if (DotProduct(centerDirection, normal) < 0.f)
+    {
+        normal = -normal;
+    }
+
     return true;
 }
 
@@ -186,7 +198,7 @@ void Engine_Tools::ProjectCircleToAxis(sf::Vector2f circleCenter, float circleRa
 
 int Engine_Tools::FindClosesPointToCircle(sf::Vector2f circleCenter, std::vector<sf::Vector2f> vertices)
 {
-    int closestIndex;
+    int closestIndex = -1;
     float minDistance = float(INT_MAX);
 
     for (int i = 0; i < vertices.size(); i++)
