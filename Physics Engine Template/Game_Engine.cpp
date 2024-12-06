@@ -60,9 +60,9 @@ void Game_Engine::PhysicsUpdate()
 {
 	sf::Vector2f rectBvel = sf::Vector2f(rectangleB->GetVelocity().x * drag, rectangleB->GetVelocity().y * drag);
 	rectangleB->SetVelocity(rectBvel);
-	if (rectangleB->GetVelocity().x < 0.) // its not working for some reason but i cant figure out why
+	if (rectangleB->GetVelocity().x < 0.001f) // this is so janked. for some reason it thinks that 0.1 < 0.001 is true but 0.1 <= 0.001 is false. it works somewhat at least ig
 	{
-		rectangleB->SetVelocity(sf::Vector2f(0, rectangleB->GetVelocity().y));
+		rectangleB->SetVelocity(sf::Vector2f(0, rectangleB->GetVelocity().y)); // if the velocity is below a certain value set it to 0 to reduce compuation amount
 		std::cout << "it happened" << std::endl;
 	}
 	
