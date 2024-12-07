@@ -41,24 +41,24 @@ Rigid_Body_Circle::~Rigid_Body_Circle()
 void Rigid_Body_Circle::PhysicsUpdate(float gravity)
 {
 	engineTools.deltaTime = engineTools.clock.restart();
-	if (this->lockedPosition)
+	if (lockedPosition)
 	{
 		return;
 	}
 
-	if (this->velocity.y < this->terminalVelocity)
+	if (velocity.y < terminalVelocity)
 	{
-		this->velocity.y += gravity;
-		this->velocity += this->acceleration;
-		this->position = this->circle.getPosition();
-		this->circle.move(this->velocity * engineTools.deltaTime.asSeconds() * engineTools.dtMultiplier);
+		velocity.y += gravity;
+		velocity += acceleration;
+		position = circle.getPosition();
+		circle.move(velocity * engineTools.deltaTime.asSeconds() * engineTools.dtMultiplier);
 		//this->circle.setPosition(this->position.x, this->position.y += this->velocity.y * engineTools.deltaTime.asSeconds() * engineTools.dtMultiplier);
 		return;
 	}
 
-	this->velocity.y = this->terminalVelocity;
-	this->position = this->circle.getPosition();
-	this->circle.move(this->velocity * engineTools.deltaTime.asSeconds() * engineTools.dtMultiplier);
+	velocity.y = terminalVelocity;
+	position = circle.getPosition();
+	circle.move(velocity * engineTools.deltaTime.asSeconds() * engineTools.dtMultiplier);
 }
 
 // Accessors and Modifiers
