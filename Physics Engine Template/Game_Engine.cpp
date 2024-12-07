@@ -24,7 +24,7 @@ void Game_Engine::initWindow() // initializes the window with the title and size
 
 void Game_Engine::initVariables() // basic initialization function
 {
-	gravity = 0.51f; // higher number = more gravity
+	gravity = 0.f; // higher number = more gravity
 	drag = 0.95f; // higher number = less drag
 	engineTools = Engine_Tools();
 	rectangleA = new Rigid_Body_Rectangle(true, true, sf::Vector2f(200, 500), 0);
@@ -57,11 +57,11 @@ void Game_Engine::PhysicsUpdate()
 {
 	sf::Vector2f rectBvel = sf::Vector2f(rectangleB->GetVelocity().x * drag, rectangleB->GetVelocity().y * drag);
 	rectangleB->SetVelocity(rectBvel);
-	if (rectangleB->GetVelocity().x < 0.001f) // either this is janked or my math is terrible but either way i hate it
-	{
-		rectangleB->SetVelocity(sf::Vector2f(0, rectangleB->GetVelocity().y)); // if the velocity is below a certain value set it to 0 to reduce compuation amount
-		std::cout << "it happened" << std::endl;
-	}
+	//if (rectangleB->GetVelocity().x < 0.001f) // either this is janked or my math is terrible but either way i hate it
+	//{
+	//	rectangleB->SetVelocity(sf::Vector2f(0, rectangleB->GetVelocity().y)); // if the velocity is below a certain value set it to 0 to reduce compuation amount
+	//	std::cout << "it happened" << std::endl;
+	//}
 	
 	
 }
@@ -72,6 +72,7 @@ void Game_Engine::CollisionUpdate()
 	float depth;
 	std::vector<sf::Vector2f> verticesA = rectangleA->GetVertices(rectangleA->GetPointCount());
 	std::vector<sf::Vector2f> verticesB = rectangleB->GetVertices(rectangleB->GetPointCount());
+	if (engineTools.SATPolygonCollision(verticesA, verticesB, normal, depth)) { rectangleA->SetLockedPosition(false); }
 	if (!(rectangleA->GetCollidable() || rectangleB->GetCollidable())) // if either object is not collidable
 	{
 		return;
@@ -105,6 +106,26 @@ void Game_Engine::CollisionUpdate()
 	}
 }
 
+void Game_Engine::Movement()
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) // moves the object left
+	{
+		rectangleB->SetVelocity(sf::Vector2f(rectangleB->GetVelocity().x - 0.1f, rectangleB->GetVelocity().y));
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) // moves the object right
+	{
+		rectangleB->SetVelocity(sf::Vector2f(rectangleB->GetVelocity().x + 0.1f, rectangleB->GetVelocity().y));
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) // moves the object up
+	{
+		rectangleB->SetVelocity(sf::Vector2f(rectangleB->GetVelocity().x, rectangleB->GetVelocity().y - 0.1f));
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) // moves the object down
+	{
+		rectangleB->SetVelocity(sf::Vector2f(rectangleB->GetVelocity().x, rectangleB->GetVelocity().y + 0.1f));
+	}
+}
+
 void Game_Engine::Update()
 {
 	PhysicsUpdate();
@@ -112,6 +133,7 @@ void Game_Engine::Update()
 	this->rectangleA->Update(gravity);
 	this->rectangleB->Update(gravity);
 	PollEvents();
+	Movement();
 	std::cout << "rectangleB velocity: " << rectangleB->GetVelocity().x << ", " << rectangleB->GetVelocity().y << std::endl;
 }
 
@@ -125,4 +147,5 @@ void Game_Engine::Render()
 
 	this->window->display(); // displayed the frame with the updated information
 }
+
 

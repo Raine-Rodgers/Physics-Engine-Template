@@ -28,6 +28,7 @@ private:
 public:
 	const bool				running() const { return this->window->isOpen(); } // returns if the window is open or not
 	void					PollEvents();
+	void					Movement();
 	void					PhysicsUpdate();
 	void					CollisionUpdate();
 	void					Update();
