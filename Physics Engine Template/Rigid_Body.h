@@ -17,13 +17,13 @@ protected:
 public:
 
 	// Accessors and Modifiers
-	sf::Vector2f	GetVelocity()			{ return this->velocity; }
-	sf::Vector2f	GetAcceleration()		{ return this->acceleration; }
-	float			GetTerminalVelocity()	{ return this->terminalVelocity; }
-	float			GetMass()				{ return this->mass; }
-	float			GetFriction()			{ return this->friction; }
-	bool			GetLockedPosition()		{ return this->lockedPosition; }
-	bool			GetCollidable()			{ return this->collidable; }
+	sf::Vector2f	GetVelocity()									{ return this->velocity; }
+	sf::Vector2f	GetAcceleration()								{ return this->acceleration; }
+	float			GetTerminalVelocity()							{ return this->terminalVelocity; }
+	float			GetMass()										{ return this->mass; }
+	float			GetFriction()									{ return this->friction; }
+	bool			GetLockedPosition()								{ return this->lockedPosition; }
+	bool			GetCollidable()									{ return this->collidable; }
 
 	void			SetVelocity(sf::Vector2f velocity)				{ this->velocity = velocity; }
 	void			SetAcceleration(sf::Vector2f acceleration)		{ this->acceleration = acceleration; }

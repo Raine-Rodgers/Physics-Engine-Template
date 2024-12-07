@@ -1,7 +1,7 @@
 #include "Game_Engine.h"
 
 
-Game_Engine::Game_Engine()
+Game_Engine::Game_Engine() // constructor just calls the init functions to clean up the code a bit and make it easier to read
 {
 	this->initWindow();
 	this->initVariables();
@@ -12,19 +12,19 @@ Game_Engine::~Game_Engine()
 	delete this->window;
 }
 
-
-void Game_Engine::initWindow()
+void Game_Engine::initWindow() // initializes the window with the title and size
 {
 	// sf::VideoMode::getDesktopMode().width * 0.5f, sf::VideoMode::getDesktopMode().height * 0.7f
 	this->videoMode = sf::VideoMode(900, 900);
 	this->window = new sf::RenderWindow(this->videoMode, "Template", sf::Style::Close | sf::Style::Titlebar);
+	
 
 	this->window->setFramerateLimit(60);
 }
 
-void Game_Engine::initVariables()
+void Game_Engine::initVariables() // basic initialization function
 {
-	gravity = 0.1f;
+	gravity = 0.51f; // higher number = more gravity
 	drag = 0.95f; // higher number = less drag
 	engineTools = Engine_Tools();
 	rectangleA = new Rigid_Body_Rectangle(true, true, sf::Vector2f(200, 500), 0);
@@ -38,7 +38,7 @@ void Game_Engine::initVariables()
 
 void Game_Engine::PollEvents()
 {
-	while (this->window->pollEvent(this->event))
+	while (this->window->pollEvent(this->event)) // for now this is just for closing the window. might add more later but i doubt it
 	{
 		switch(this->event.type)
 		{
@@ -48,13 +48,10 @@ void Game_Engine::PollEvents()
 			case sf::Event::KeyPressed:
 				if(this->event.key.code == sf::Keyboard::Escape)
 					this->window->close();
-				if (this->event.key.code == sf::Keyboard::W)
-					PhysicsUpdate();
 				break;
 		}
 	}
 }
-
 
 void Game_Engine::PhysicsUpdate()
 {
@@ -85,9 +82,9 @@ void Game_Engine::CollisionUpdate()
 		{
 			rectangleA->SetPosition(rectangleA->GetRectangle().getPosition() + normal * depth / 2.f); // move each object half the depth
 			rectangleB->SetPosition(rectangleB->GetRectangle().getPosition() - normal * depth / 2.f);
-			rectangleA->SetVelocity(rectangleA->GetVelocity() - normal * (normal.x * rectangleA->GetVelocity().x + normal.y * rectangleA->GetVelocity().y));
+			rectangleA->SetVelocity(rectangleA->GetVelocity() - normal * (normal.x * rectangleA->GetVelocity().x + normal.y * rectangleA->GetVelocity().y)); // apply the normal to the velocity
 			rectangleB->SetVelocity(rectangleB->GetVelocity() - normal * (normal.x * rectangleB->GetVelocity().x + normal.y * rectangleB->GetVelocity().y));
-			return;
+			return; // return to prevent further calculations
 		}
 		if (rectangleA->GetLockedPosition() && rectangleB->GetLockedPosition()) // if both objects are locked
 		{
@@ -108,7 +105,6 @@ void Game_Engine::CollisionUpdate()
 	}
 }
 
-
 void Game_Engine::Update()
 {
 	PhysicsUpdate();
@@ -121,12 +117,12 @@ void Game_Engine::Update()
 
 void Game_Engine::Render()
 {
-	this->window->clear();
+	this->window->clear(sf::Color(46, 74, 94)); // clears the frame and sets the color of the window the rgb value specified
 
-	rectangleA->Render(this->window);
+	rectangleA->Render(this->window); // call the render function of the object and pass the window pointer to it
 
 	rectangleB->Render(this->window);
 
-	this->window->display();
+	this->window->display(); // displayed the frame with the updated information
 }
 

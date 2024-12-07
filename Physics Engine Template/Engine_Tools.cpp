@@ -78,7 +78,7 @@ bool Engine_Tools::SATPolygonCollision(std::vector<sf::Vector2f> verticesA, std:
 
     sf::Vector2f centerDirection = centerA - centerB;
 
-    if (DotProduct(centerDirection, normal) < 0.f)
+    if (DotProduct(centerDirection, normal) < 0.f) // if the center direction is less than 0 then the normal is flipped
 	{
 		normal = -normal;
 	}
@@ -159,7 +159,7 @@ bool Engine_Tools::SATCircleToPolyCollision(sf::Vector2f circleCenter, float cir
 
 ////////////////////// PROJECTION FUNCTIONS //////////////////////
 
-void Engine_Tools::ProjectVerticesToAxis(std::vector<sf::Vector2f> vertices, sf::Vector2f axis, float& min, float& max)
+void Engine_Tools::ProjectVerticesToAxis(std::vector<sf::Vector2f> vertices, sf::Vector2f axis, float& min, float& max) // usage of reference & alows me to change their values without using the return statement
 {
     min = float(INT_MAX);
     max = float(INT_MIN);

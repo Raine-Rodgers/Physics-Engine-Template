@@ -56,11 +56,6 @@ void Rigid_Body_Rectangle::SetColor(sf::Color color)
 	this->rectangle.setFillColor(color);
 }
 
-void Rigid_Body_Rectangle::ThrowThings()
-{
-	std::cout << sf::Vector2f(0, this->rectangle.getTransform().transformPoint(this->rectangle.getPoint(2)).y).y << std::endl;
-}
-
 // Update Functions
 void Rigid_Body_Rectangle::PhysicsUpdate(float gravity)
 {

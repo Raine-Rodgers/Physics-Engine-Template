@@ -38,6 +38,7 @@ Rigid_Body_Circle::~Rigid_Body_Circle()
 {
 }
 
+
 void Rigid_Body_Circle::PhysicsUpdate(float gravity)
 {
 	engineTools.deltaTime = engineTools.clock.restart();
@@ -59,12 +60,6 @@ void Rigid_Body_Circle::PhysicsUpdate(float gravity)
 	velocity.y = terminalVelocity;
 	position = circle.getPosition();
 	circle.move(velocity * engineTools.deltaTime.asSeconds() * engineTools.dtMultiplier);
-}
-
-// Accessors and Modifiers
-void Rigid_Body_Circle::SetColor(sf::Color color)
-{
-	this->circle.setFillColor(color);
 }
 
 

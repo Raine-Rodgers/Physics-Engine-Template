@@ -12,24 +12,24 @@ private:
 	Engine_Tools		engineTools;
 
 public:
+	// Accessors and Modifiers
+	sf::CircleShape		GetCircle()							{ return this->circle; }
+	float				GetRadius()							{ return this->radius; }
+	sf::Vector2f		GetPosition()						{ return this->position; }
+
+	void				SetRadius(float radius)				{ this->radius = radius; }
+	void				SetPosition(sf::Vector2f position)	{ this->position = position; }
+	void				SetColor(sf::Color color)			{ this->circle.setFillColor(color); }
+
+
+	// update and render functions
+	void				PhysicsUpdate(float gravity);
+	void				Update(float gravity);
+	void				Render(sf::RenderWindow* window);
+
+	// Constructors and Destructors
 	Rigid_Body_Circle();
 	Rigid_Body_Circle(bool lockedPosition, bool collidable);
 	Rigid_Body_Circle(sf::Vector2f acceleration, sf::Vector2f velocity, float mass, float friction, float radius, sf::Vector2f position, bool lockedPosition, bool collidable, float terminalVelocity);
 	~Rigid_Body_Circle();
-
-	// Accessors and Modifiers
-	sf::CircleShape		GetCircle() { return this->circle; }
-	float				GetRadius() { return this->radius; }
-	sf::Vector2f		GetPosition() { return this->position; }
-
-	void				SetColor(sf::Color color);
-	void				SetRadius(float radius) { this->radius = radius; }
-	void				SetPosition(sf::Vector2f position) { this->position = position; }
-
-
-	// update and render functions
-	void PhysicsUpdate(float gravity);
-	void Update(float gravity);
-	void Render(sf::RenderWindow* window);
 };
-

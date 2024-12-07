@@ -10,32 +10,30 @@
 class Game_Engine
 {
 private:
-	void initWindow();
-	void initVariables();
+	void					initWindow();
+	void					initVariables();
 
-	sf::VideoMode videoMode;
-	sf::RenderWindow* window;
-	sf::Event event;
-	Engine_Tools engineTools;
+	sf::VideoMode			videoMode;
+	sf::RenderWindow*		window;
+	sf::Event				event;
+	Engine_Tools			engineTools;
+	float					gravity;
+	float					drag;
 
 	// test variables
-	Rigid_Body_Rectangle* rectangleA;
-	Rigid_Body_Rectangle* rectangleB;
-	Rigid_Body_Rectangle* rectangleC;
-	//
+	Rigid_Body_Rectangle*	rectangleA;
+	Rigid_Body_Rectangle*	rectangleB;
 
-	float gravity;
-	float drag;
 
 public:
+	const bool				running() const { return this->window->isOpen(); } // returns if the window is open or not
+	void					PollEvents();
+	void					PhysicsUpdate();
+	void					CollisionUpdate();
+	void					Update();
+	void					Render();
+
 	Game_Engine();
 	~Game_Engine();
-
-	const bool running() const { return this->window->isOpen(); }
-	void PollEvents();
-	void PhysicsUpdate();
-	void CollisionUpdate();
-	void Update();
-	void Render();
 };
 
