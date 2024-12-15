@@ -8,7 +8,6 @@ class Rigid_Body_Circle : public Rigid_Body
 private:
 	sf::CircleShape		circle;
 	float				radius;
-	sf::Vector2f		position;
 	Engine_Tools		engineTools;
 
 public:
@@ -18,7 +17,6 @@ public:
 	sf::Vector2f		GetPosition()						{ return this->position; }
 
 	void				SetRadius(float radius)				{ this->radius = radius; }
-	void				SetPosition(sf::Vector2f position)	{ this->position = position; }
 	void				SetColor(sf::Color color)			{ this->circle.setFillColor(color); }
 
 
@@ -29,7 +27,7 @@ public:
 
 	// Constructors and Destructors
 	Rigid_Body_Circle();
-	Rigid_Body_Circle(bool lockedPosition, bool collidable);
-	Rigid_Body_Circle(sf::Vector2f velocity, float mass, float friction, float radius, sf::Vector2f position, bool lockedPosition, bool collidable, float terminalVelocity);
+	Rigid_Body_Circle(bool lockedPosition, bool collidable, int shapeType);
+	Rigid_Body_Circle(sf::Vector2f velocity, float mass, float friction, float radius, sf::Vector2f position, bool lockedPosition, bool collidable, float terminalVelocity, int shapeType);
 	~Rigid_Body_Circle();
 };
