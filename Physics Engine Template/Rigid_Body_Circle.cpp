@@ -56,7 +56,7 @@ void Rigid_Body_Circle::PhysicsUpdate(float gravity)
 		force = sf::Vector2f(0, 0);
 		return;
 	}
-
+	
 	velocity.y = terminalVelocity;
 	position = circle.getPosition();
 	circle.move(velocity * engineTools.deltaTime.asSeconds() * engineTools.dtMultiplier);

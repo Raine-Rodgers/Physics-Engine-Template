@@ -29,6 +29,9 @@ public:
 	float							GetFriction()									{ return this->friction; }
 	bool							GetLockedPosition()								{ return this->lockedPosition; }
 	bool							GetCollidable()									{ return this->collidable; }
+	sf::RectangleShape				GetRectangle()									{ return this->rectangle; }
+	sf::CircleShape					GetCircle()										{ return this->circle; }
+	int								GetShapeType()									{ return this->shapeType; }
 
 	void							SetVelocity(sf::Vector2f velocity)				{ this->velocity = velocity; }
 	void							SetPosition(sf::Vector2f position)				{ this->position = position; }
@@ -45,7 +48,6 @@ public:
 	Rigid_Body();
 	Rigid_Body(bool lockedPosition, bool collidable, int shapeType);
 	Rigid_Body(sf::Vector2f velocity,float mass, float friction, bool lockedPosition, float terminalVelocity, bool collidable, int shapeType);
-	void CreateShape(int shapeType);
 	~Rigid_Body();
 };
 
