@@ -23,8 +23,8 @@ Rigid_Body_Circle::Rigid_Body_Circle(bool lockedPosition, bool collidable)
 	this->circle.setPosition(this->position);
 }
 
-Rigid_Body_Circle::Rigid_Body_Circle(sf::Vector2f acceleration, sf::Vector2f velocity, float mass, float friction, float radius, sf::Vector2f, bool lockedPosition, bool collidable, float terminalVelocity)
-: Rigid_Body(acceleration, velocity, mass, friction, lockedPosition, terminalVelocity, collidable)
+Rigid_Body_Circle::Rigid_Body_Circle(sf::Vector2f velocity, float mass, float friction, float radius, sf::Vector2f, bool lockedPosition, bool collidable, float terminalVelocity)
+: Rigid_Body(velocity, mass, friction, lockedPosition, terminalVelocity, collidable)
 {
 	this->radius = radius;
 	this->position = position;
@@ -50,7 +50,6 @@ void Rigid_Body_Circle::PhysicsUpdate(float gravity)
 	if (velocity.y < terminalVelocity)
 	{
 		velocity.y += gravity;
-		velocity += acceleration;
 		position = circle.getPosition();
 		circle.move(velocity * engineTools.deltaTime.asSeconds() * engineTools.dtMultiplier);
 		//this->circle.setPosition(this->position.x, this->position.y += this->velocity.y * engineTools.deltaTime.asSeconds() * engineTools.dtMultiplier);

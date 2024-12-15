@@ -30,6 +30,6 @@ public:
 	// Constructors and Destructors
 	Rigid_Body_Circle();
 	Rigid_Body_Circle(bool lockedPosition, bool collidable);
-	Rigid_Body_Circle(sf::Vector2f acceleration, sf::Vector2f velocity, float mass, float friction, float radius, sf::Vector2f position, bool lockedPosition, bool collidable, float terminalVelocity);
+	Rigid_Body_Circle(sf::Vector2f velocity, float mass, float friction, float radius, sf::Vector2f position, bool lockedPosition, bool collidable, float terminalVelocity);
 	~Rigid_Body_Circle();
 };

@@ -20,8 +20,8 @@ Rigid_Body_Rectangle::Rigid_Body_Rectangle(bool lockedPosition, bool collidable,
 	this->rectangle.setRotation(rotation);
 }
 
-Rigid_Body_Rectangle::Rigid_Body_Rectangle(sf::Vector2f acceleration, sf::Vector2f velocity, float mass, float friction, sf::Vector2f size, sf::Vector2f position, bool lockedPosition, bool collidable, float terminalVelocity)
-: Rigid_Body(acceleration, velocity, mass, friction, lockedPosition, terminalVelocity, collidable)
+Rigid_Body_Rectangle::Rigid_Body_Rectangle(sf::Vector2f velocity, float mass, float friction, sf::Vector2f size, sf::Vector2f position, bool lockedPosition, bool collidable, float terminalVelocity)
+: Rigid_Body(velocity, mass, friction, lockedPosition, terminalVelocity, collidable)
 {
 	this->size = size;
 	this->position = position;
@@ -68,8 +68,8 @@ void Rigid_Body_Rectangle::PhysicsUpdate(float gravity)
 	if (velocity.y < terminalVelocity) // apparently removing this-> fixes the issue where the velocity is not set to 0 when using a low gravity value. No clue why tbh
 	{
 		velocity.y += gravity;
-		velocity += acceleration;
 		position = rectangle.getPosition();
+		velocity += force * engineTools.deltaTime.asSeconds() * engineTools.dtMultiplier;
 		rectangle.move(velocity * engineTools.deltaTime.asSeconds() * engineTools.dtMultiplier);
 
 		return;
