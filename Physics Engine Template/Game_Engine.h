@@ -19,6 +19,7 @@ private:
 	Engine_Tools			engineTools;
 	float					gravity;
 	float					drag;
+	std::vector<Rigid_Body*> objectList;
 
 	// test variables
 	Rigid_Body_Rectangle*	rectangleA;

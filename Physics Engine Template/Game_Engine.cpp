@@ -27,12 +27,15 @@ void Game_Engine::initVariables() // basic initialization function
 	gravity = 0.f; // higher number = more gravity
 	drag = 0.95f; // higher number = less drag
 	engineTools = Engine_Tools();
+	objectList = std::vector<Rigid_Body*>();
 	rectangleA = new Rigid_Body_Rectangle(true, true, sf::Vector2f(200, 500), 0);
 	rectangleA->SetColor(sf::Color::Green);
 	rectangleA->SetRotation(45);
 	rectangleA->SetPosition(sf::Vector2f(150, 400));
 	rectangleB = new Rigid_Body_Rectangle(false, true, sf::Vector2f(200, 300), 0);
 	rectangleB->SetColor(sf::Color::Blue);
+	objectList.push_back(rectangleA);
+	objectList.push_back(rectangleB);
 
 }
 
@@ -68,6 +71,15 @@ void Game_Engine::PhysicsUpdate()
 
 void Game_Engine::CollisionUpdate()
 {
+	for (int i = 0; i < objectList.size(); i++) // loops through the object list and checks for collisions
+	{
+		sf::RectangleShape bodyA = objectList[i]->GetRectangle();
+		for (int j = i + 1; j < objectList.size(); j++)
+		{
+			
+		}
+	}
+
 	sf::Vector2f normal;
 	float depth;
 	std::vector<sf::Vector2f> verticesA = rectangleA->GetVertices(rectangleA->GetPointCount());

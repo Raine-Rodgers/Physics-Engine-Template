@@ -71,7 +71,7 @@ void Rigid_Body_Rectangle::PhysicsUpdate(float gravity)
 		position = rectangle.getPosition();
 		velocity += force * engineTools.deltaTime.asSeconds() * engineTools.dtMultiplier;
 		rectangle.move(velocity * engineTools.deltaTime.asSeconds() * engineTools.dtMultiplier);
-
+		force = sf::Vector2f(0, 0);
 		return;
 	}
 

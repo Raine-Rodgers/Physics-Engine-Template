@@ -9,9 +9,11 @@ Rigid_Body::Rigid_Body()
 	this->collidable = true;
 	this->terminalVelocity = 20.f;
 	this->force = sf::Vector2f(0, 0);
+	this->shapeType = 0;
+	CreateShape(this->shapeType);
 }
 
-Rigid_Body::Rigid_Body(bool lockedPosition, bool collidable)
+Rigid_Body::Rigid_Body(bool lockedPosition, bool collidable, int shapeType)
 {
 	this->velocity = sf::Vector2f(0, 0);
 	this->mass = 1;
@@ -20,9 +22,11 @@ Rigid_Body::Rigid_Body(bool lockedPosition, bool collidable)
 	this->collidable = collidable;
 	this->terminalVelocity = 20.f; // havent done anything yet with this
 	this->force = sf::Vector2f(0, 0);
+	this->shapeType = shapeType;
+	CreateShape(this->shapeType);
 }
 
-Rigid_Body::Rigid_Body(sf::Vector2f velocity, float mass, float friction, bool lockedPosition, float terminalVelocity, bool collidable)
+Rigid_Body::Rigid_Body(sf::Vector2f velocity, float mass, float friction, bool lockedPosition, float terminalVelocity, bool collidable, int shapeType)
 {
 	this->velocity = velocity;
 	this->mass = mass;
@@ -31,6 +35,21 @@ Rigid_Body::Rigid_Body(sf::Vector2f velocity, float mass, float friction, bool l
 	this->collidable = collidable;
 	this->terminalVelocity = terminalVelocity;
 	this->force = sf::Vector2f(0, 0);
+	this->shapeType = shapeType;
+	CreateShape(this->shapeType);
+}
+
+void Rigid_Body::CreateShape(int shapeType)
+{
+	switch (shapeType)
+	{
+	case 0:
+		break;
+	case 1:
+		break;
+	default:
+		break;
+	}
 }
 
 Rigid_Body::~Rigid_Body()

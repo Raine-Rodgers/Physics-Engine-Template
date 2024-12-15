@@ -13,6 +13,7 @@ protected:
 	float			friction;
 	bool			lockedPosition;
 	bool			collidable;
+	int				shapeType;
 
 public:
 
@@ -31,10 +32,14 @@ public:
 	void			SetLockedPosition(bool lockedPosition)			{ this->lockedPosition = lockedPosition; }
 	void			SetCollidable(bool collidable)					{ this->collidable = collidable; }
 
+	// Methods
+	void			AddForce(sf::Vector2f force)					{ this->force += force; }
+
 	// Constructors and Destructors
 	Rigid_Body();
-	Rigid_Body(bool lockedPosition, bool collidable);
-	Rigid_Body(sf::Vector2f velocity,float mass, float friction, bool lockedPosition, float terminalVelocity, bool collidable);
+	Rigid_Body(bool lockedPosition, bool collidable, int shapeType);
+	Rigid_Body(sf::Vector2f velocity,float mass, float friction, bool lockedPosition, float terminalVelocity, bool collidable, int shapeType);
+	void CreateShape(int shapeType);
 	~Rigid_Body();
 };
 
