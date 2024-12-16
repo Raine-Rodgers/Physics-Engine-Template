@@ -1,41 +1,126 @@
 #include "Rigid_Body.h"
 
+
 Rigid_Body::Rigid_Body()
 {
-	this->velocity = sf::Vector2f(0, 0);
-	this->mass = 1;
-	this->friction = 0.1f;
-	this->lockedPosition = false;
-	this->collidable = true;
-	this->terminalVelocity = 20.f;
-	this->force = sf::Vector2f(0, 0);
-	this->shapeType = 0;
+	this->_velocity = sf::Vector2f(0, 0);
+	this->_mass = 1;
+	this->_friction = 0.1f;
+	this->_lockedPosition = false;
+	this->_collidable = true;
+	this->_terminalVelocity = 20.f;
+	this->_force = sf::Vector2f(0, 0);
+	this->_shapeType = 0;
 }
 
 Rigid_Body::Rigid_Body(bool lockedPosition, bool collidable, int shapeType)
 {
-	this->velocity = sf::Vector2f(0, 0);
-	this->mass = 1;
-	this->friction = 0.1f;
-	this->lockedPosition = lockedPosition;
-	this->collidable = collidable;
-	this->terminalVelocity = 20.f; // havent done anything yet with this
-	this->force = sf::Vector2f(0, 0);
-	this->shapeType = shapeType;
+	this->_velocity = sf::Vector2f(0, 0);
+	this->_mass = 1;
+	this->_friction = 0.1f;
+	this->_lockedPosition = lockedPosition;
+	this->_collidable = collidable;
+	this->_terminalVelocity = 20.f; // havent done anything yet with this
+	this->_force = sf::Vector2f(0, 0);
+	this->_shapeType = shapeType;
 }
 
 Rigid_Body::Rigid_Body(sf::Vector2f velocity, float mass, float friction, bool lockedPosition, float terminalVelocity, bool collidable, int shapeType)
 {
-	this->velocity = velocity;
-	this->mass = mass;
-	this->friction = friction;
-	this->lockedPosition = lockedPosition;
-	this->collidable = collidable;
-	this->terminalVelocity = terminalVelocity;
-	this->force = sf::Vector2f(0, 0);
-	this->shapeType = shapeType;
+	this->_velocity = velocity;
+	this->_mass = mass;
+	this->_friction = friction;
+	this->_lockedPosition = lockedPosition;
+	this->_collidable = collidable;
+	this->_terminalVelocity = terminalVelocity;
+	this->_force = sf::Vector2f(0, 0);
+	this->_shapeType = shapeType;
 }
 
 Rigid_Body::~Rigid_Body()
 {
 }
+
+std::vector<sf::Vector2f> Rigid_Body::GetVertices(int vertexCount)
+{
+	std::vector<sf::Vector2f> vertices;
+	for (int i = 0; i < vertexCount; i++)
+	{
+		vertices.push_back(_rectangle.getTransform().transformPoint(_rectangle.getPoint(i)));
+	}
+	return vertices;
+}
+
+
+void Rigid_Body::RectPhysicsUpdate(float gravity)
+{
+	_engineTools.deltaTime = _engineTools.clock.restart();
+	if (_lockedPosition)
+	{
+		return;
+	}
+
+	if (_velocity.y < _terminalVelocity) // apparently removing this-> fixes the issue where the _velocity is not set to 0 when using a low gravity value. No clue why tbh
+	{
+		_velocity.y += gravity;
+		_position = _rectangle.getPosition();
+		_velocity += _force * _engineTools.deltaTime.asSeconds() * _engineTools.dtMultiplier;
+		_rectangle.move(_velocity * _engineTools.deltaTime.asSeconds() * _engineTools.dtMultiplier);
+		_force = sf::Vector2f(0, 0);
+		return;
+	}
+
+	_velocity.y = _terminalVelocity;
+	_position = _rectangle.getPosition();
+	_rectangle.move(_velocity * _engineTools.deltaTime.asSeconds() * _engineTools.dtMultiplier);
+}
+
+void Rigid_Body::CircPhysicsUpdate(float gravity)
+{
+	_engineTools.deltaTime = _engineTools.clock.restart();
+	if (_lockedPosition)
+	{
+		return;
+	}
+
+	if (_velocity.y < _terminalVelocity) // apparently removing this-> fixes the issue where the _velocity is not set to 0 when using a low gravity value. No clue why tbh
+	{
+		_velocity.y += gravity;
+		_position = _circle.getPosition();
+		_velocity += _force * _engineTools.deltaTime.asSeconds() * _engineTools.dtMultiplier;
+		_circle.move(_velocity * _engineTools.deltaTime.asSeconds() * _engineTools.dtMultiplier);
+		_force = sf::Vector2f(0, 0);
+		return;
+	}
+
+	_velocity.y = _terminalVelocity;
+	_position = _circle.getPosition();
+	_circle.move(_velocity * _engineTools.deltaTime.asSeconds() * _engineTools.dtMultiplier);
+}
+
+
+
+void Rigid_Body::Update(float gravity, int shapeType)
+{
+	if (shapeType == 0)
+	{
+		RectPhysicsUpdate(gravity);
+	}
+	else if (shapeType == 1)
+	{
+		CircPhysicsUpdate(gravity);
+	}
+}
+
+void Rigid_Body::Render(sf::RenderWindow* window)
+{
+	if (_shapeType == 0)
+	{
+		window->draw(_rectangle);
+	}
+	else if (_shapeType == 1)
+	{
+		window->draw(_circle);
+	}
+}
+

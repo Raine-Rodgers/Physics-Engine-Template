@@ -31,7 +31,8 @@ public:
 	void					PollEvents();
 	void					Movement();
 	void					PhysicsUpdate();
-	void					CollisionUpdate();
+	void					CollisionCheck();
+	void					CollisionResolve(int indexShapeA, int indexShapeB, sf::Vector2f normal, float depth);
 	void					Update();
 	void					Render();
 

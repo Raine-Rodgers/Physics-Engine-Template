@@ -156,6 +156,28 @@ bool Engine_Tools::SATCircleToPolyCollision(sf::Vector2f circleCenter, float cir
     return true;
 }
 
+bool Engine_Tools::CircleCollision(sf::Vector2f circleCenterA, float circleRadiusA, sf::Vector2f circleCenterB, float circleRadiusB, sf::Vector2f& normal, float& depth)
+{
+    float distance = Distance(circleCenterA, circleCenterB);
+    float radii = circleRadiusA + circleRadiusB;
+
+    normal = sf::Vector2f(0, 0);
+    depth = float(INT_MIN);
+
+    depth = radii - distance;
+
+    if (distance >= radii)
+    {
+		return false;
+	}
+
+    normal = Normalize(circleCenterA - circleCenterB);
+    depth = radii - distance;
+
+	return true;
+}
+
+
 
 ////////////////////// PROJECTION FUNCTIONS //////////////////////
 

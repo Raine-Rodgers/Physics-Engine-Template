@@ -15,6 +15,7 @@ public:
 
 	bool				SATPolygonCollision(std::vector<sf::Vector2f> verticesA, std::vector<sf::Vector2f> verticesB, sf::Vector2f& normal, float& depth); // Uses separating axis theorem to check if two polygons are colliding
 	bool				SATCircleToPolyCollision(sf::Vector2f circleCenter, float circleRadius, std::vector<sf::Vector2f> vertices, sf::Vector2f& normal, float& depth); // Uses separating axis theorem to check if a circle and a polygon are colliding
+	bool				CircleCollision(sf::Vector2f circleCenterA, float circleRadiusA, sf::Vector2f circleCenterB, float circleRadiusB, sf::Vector2f& normal, float& depth); // Checks if two circles are colliding
 	float				MinValue(float a, float b);
 	float				MaxValue(float a, float b);
 	float				DotProduct(sf::Vector2f a, sf::Vector2f b);

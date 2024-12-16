@@ -2,47 +2,58 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
+#include "Engine_Tools.h"
 
 class Rigid_Body
 {
 protected:
-	sf::Vector2f					velocity;
-	sf::Vector2f					force;
-	float							terminalVelocity;
-	float							mass;
-	float							friction;
-	bool							lockedPosition;
-	bool							collidable;
-	int								shapeType;
-	sf::Vector2f					position;
+	Engine_Tools					_engineTools;
+	sf::Vector2f					_velocity;
+	sf::Vector2f					_force;
+	sf::Vector2f					_position;
+	float							_terminalVelocity;
+	float							_mass;
+	float							_friction;
+	bool							_lockedPosition;
+	bool							_collidable;
+	int								_shapeType;
 
-	sf::RectangleShape				rectangle;
-	sf::CircleShape					circle;
+	sf::RectangleShape				_rectangle;
+	sf::CircleShape					_circle;
 
 public:
 
 	// Accessors and Modifiers
-	sf::Vector2f					GetVelocity()									{ return this->velocity; }
-	sf::Vector2f					GetPosition()									{ return this->position; }
-	float							GetTerminalVelocity()							{ return this->terminalVelocity; }
-	float							GetMass()										{ return this->mass; }
-	float							GetFriction()									{ return this->friction; }
-	bool							GetLockedPosition()								{ return this->lockedPosition; }
-	bool							GetCollidable()									{ return this->collidable; }
-	sf::RectangleShape				GetRectangle()									{ return this->rectangle; }
-	sf::CircleShape					GetCircle()										{ return this->circle; }
-	int								GetShapeType()									{ return this->shapeType; }
+	sf::Vector2f					GetVelocity()									{ return this->_velocity; }
+	sf::Vector2f					GetPosition()									{ return this->_position; }
+	float							GetTerminalVelocity()							{ return this->_terminalVelocity; }
+	float							GetMass()										{ return this->_mass; }
+	float							GetFriction()									{ return this->_friction; }
+	bool							GetLockedPosition()								{ return this->_lockedPosition; }
+	bool							GetCollidable()									{ return this->_collidable; }
 
-	void							SetVelocity(sf::Vector2f velocity)				{ this->velocity = velocity; }
-	void							SetPosition(sf::Vector2f position)				{ this->position = position; }
-	void							SetTerminalVelocity(float terminalVelocity)		{ this->terminalVelocity = terminalVelocity; }
-	void							SetMass(float mass)								{ this->mass = mass; }
-	void							SetFriction(float friction)						{ this->friction = friction; }
-	void							SetLockedPosition(bool lockedPosition)			{ this->lockedPosition = lockedPosition; }
-	void							SetCollidable(bool collidable)					{ this->collidable = collidable; }
+	sf::CircleShape					GetCircle()										{ return this->_circle; }
+	float							GetRadius()										{ return this->_circle.getRadius(); }
+
+	sf::RectangleShape				GetRectangle()									{ return this->_rectangle; }
+	int								GetShapeType()									{ return this->_shapeType; }
+	int								GetPointCount()									{ return this->_rectangle.getPointCount(); }
+	std::vector<sf::Vector2f>		GetVertices(int vertexCount);
+
+	void							SetVelocity(sf::Vector2f velocity)				{ this->_velocity = velocity; }
+	void							SetPosition(sf::Vector2f position)				{ this->_position = position; }
+	void							SetTerminalVelocity(float terminalVelocity)		{ this->_terminalVelocity = terminalVelocity; }
+	void							SetMass(float mass)								{ this->_mass = mass; }
+	void							SetFriction(float friction)						{ this->_friction = friction; }
+	void							SetLockedPosition(bool lockedPosition)			{ this->_lockedPosition = lockedPosition; }
+	void							SetCollidable(bool collidable)					{ this->_collidable = collidable; }
 
 	// Methods
-	void							AddForce(sf::Vector2f force)					{ this->force += force; }
+	void							AddForce(sf::Vector2f force)					{ this->_force += force; }
+	void							Update(float gravity, int shapeType);
+	void							RectPhysicsUpdate(float gravity);
+	void							CircPhysicsUpdate(float gravity);
+	void							Render(sf::RenderWindow* window);
 
 	// Constructors and Destructors
 	Rigid_Body();
