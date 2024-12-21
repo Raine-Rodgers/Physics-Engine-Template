@@ -54,7 +54,7 @@ std::vector<sf::Vector2f> Rigid_Body::GetVertices(int vertexCount)
 
 void Rigid_Body::RectPhysicsUpdate(float gravity)
 {
-	_engineTools.deltaTime = _engineTools.clock.restart();
+	_engineTools._deltaTime = _engineTools._clock.restart();
 	if (_lockedPosition)
 	{
 		return;
@@ -64,20 +64,20 @@ void Rigid_Body::RectPhysicsUpdate(float gravity)
 	{
 		_velocity.y += gravity;
 		_position = _rectangle.getPosition();
-		_velocity += _force * _engineTools.deltaTime.asSeconds() * _engineTools.dtMultiplier;
-		_rectangle.move(_velocity * _engineTools.deltaTime.asSeconds() * _engineTools.dtMultiplier);
+		_velocity += _force * _engineTools._deltaTime.asSeconds() * _engineTools._dtMultiplier;
+		_rectangle.move(_velocity * _engineTools._deltaTime.asSeconds() * _engineTools._dtMultiplier);
 		_force = sf::Vector2f(0, 0);
 		return;
 	}
 
 	_velocity.y = _terminalVelocity;
 	_position = _rectangle.getPosition();
-	_rectangle.move(_velocity * _engineTools.deltaTime.asSeconds() * _engineTools.dtMultiplier);
+	_rectangle.move(_velocity * _engineTools._deltaTime.asSeconds() * _engineTools._dtMultiplier);
 }
 
 void Rigid_Body::CircPhysicsUpdate(float gravity)
 {
-	_engineTools.deltaTime = _engineTools.clock.restart();
+	_engineTools._deltaTime = _engineTools._clock.restart();
 	if (_lockedPosition)
 	{
 		return;
@@ -87,15 +87,15 @@ void Rigid_Body::CircPhysicsUpdate(float gravity)
 	{
 		_velocity.y += gravity;
 		_position = _circle.getPosition();
-		_velocity += _force * _engineTools.deltaTime.asSeconds() * _engineTools.dtMultiplier;
-		_circle.move(_velocity * _engineTools.deltaTime.asSeconds() * _engineTools.dtMultiplier);
+		_velocity += _force * _engineTools._deltaTime.asSeconds() * _engineTools._dtMultiplier;
+		_circle.move(_velocity * _engineTools._deltaTime.asSeconds() * _engineTools._dtMultiplier);
 		_force = sf::Vector2f(0, 0);
 		return;
 	}
 
 	_velocity.y = _terminalVelocity;
 	_position = _circle.getPosition();
-	_circle.move(_velocity * _engineTools.deltaTime.asSeconds() * _engineTools.dtMultiplier);
+	_circle.move(_velocity * _engineTools._deltaTime.asSeconds() * _engineTools._dtMultiplier);
 }
 
 

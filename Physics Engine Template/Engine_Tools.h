@@ -9,9 +9,9 @@ private:
 	int					FindClosesPointToCircle(sf::Vector2f circleCenter, std::vector<sf::Vector2f> vertices); // finds the closest point on a polygon to a circle
 
 public:
-	sf::Clock			clock;
-	sf::Time			deltaTime;			// Delta time
-	float				dtMultiplier = 30.0f; // Delta time multiplier
+	sf::Clock			_clock;
+	sf::Time			_deltaTime;			// Delta time
+	float				_dtMultiplier = 30.0f; // Delta time multiplier
 
 	bool				SATPolygonCollision(std::vector<sf::Vector2f> verticesA, std::vector<sf::Vector2f> verticesB, sf::Vector2f& normal, float& depth); // Uses separating axis theorem to check if two polygons are colliding
 	bool				SATCircleToPolyCollision(sf::Vector2f circleCenter, float circleRadius, std::vector<sf::Vector2f> vertices, sf::Vector2f& normal, float& depth); // Uses separating axis theorem to check if a circle and a polygon are colliding

@@ -250,7 +250,7 @@ float Engine_Tools::MinValue(float a, float b)
 float Engine_Tools::MaxValue(float a, float b)
 {
     if (a > b) return a;
-	else return b;
+    else { return b; }
 }
 
 float Engine_Tools::DotProduct(sf::Vector2f a, sf::Vector2f b)
