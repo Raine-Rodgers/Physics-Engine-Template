@@ -104,12 +104,13 @@ void Game_Engine::CollisionResolve(int indexShapeA, int indexShapeB, sf::Vector2
 	}
 	if (objectList[indexShapeA]->GetLockedPosition()) // if object A is locked
 	{
-		objectList[indexShapeB]->SetPosition(objectList[indexShapeB]->GetPosition() - normal * depth); // move object B the full depth
+		objectList[indexShapeB]->SetPosition(objectList[indexShapeB]->GetPosition() + normal * depth); // move object B the full depth
 		objectList[indexShapeB]->SetVelocity(objectList[indexShapeB]->GetVelocity() - normal * (normal.x * objectList[indexShapeB]->GetVelocity().x + normal.y * objectList[indexShapeB]->GetVelocity().y));
 		return;
 	}
 	if (objectList[indexShapeB]->GetLockedPosition()) // if object B is locked
 	{
+		///////////// CHANGE " + NORMAL" TO "- NORMAL" IF HAVING COLLISION ISSUE //////////////
 		objectList[indexShapeA]->SetPosition(objectList[indexShapeA]->GetPosition() + normal * depth); // move object A the full depth
 		objectList[indexShapeA]->SetVelocity(objectList[indexShapeA]->GetVelocity() - normal * (normal.x * objectList[indexShapeA]->GetVelocity().x + normal.y * objectList[indexShapeA]->GetVelocity().y));
 		return;
@@ -129,7 +130,7 @@ void Game_Engine::CollisionCheck()
 			{
 				std::vector<sf::Vector2f> verticesA =		objectList[i]->GetVertices(objectList[i]->GetPointCount()); // create an array of vertices for each object
 				std::vector<sf::Vector2f> verticesB =		objectList[k]->GetVertices(objectList[k]->GetPointCount());
-				if (engineTools.SATPolygonCollision(verticesA, verticesB, normal, depth)) { CollisionResolve(i, k, normal, depth); }; // check for collision and resolve it
+				if (engineTools.SATPolygonCollision(verticesA, verticesB, normal, depth)) { CollisionResolve(i, k, normal, depth); } // check for collision and resolve it
 				//std::cout << "rect collision" << std::endl;
 			}
 			else if (objectList[i]->GetShapeType() == 0 && objectList[k]->GetShapeType() == 1) // if one object is a rectangle and the other a circle. might be able to make this prettier later
@@ -137,7 +138,7 @@ void Game_Engine::CollisionCheck()
 				float circleRadius =						objectList[k]->GetRadius();
 				sf::Vector2f circleCenter =					objectList[k]->GetPosition();
 				std::vector<sf::Vector2f>vertices =			objectList[i]->GetVertices(objectList[i]->GetPointCount());
-				if (engineTools.SATCircleToPolyCollision(circleCenter, circleRadius, vertices, normal, depth)) { CollisionResolve(i, k, normal, depth); };
+				if (engineTools.SATCircleToPolyCollision(circleCenter, circleRadius, vertices, normal, depth)) { CollisionResolve(i, k, normal, depth); }
 				//std::cout << "rect and circ collision" << std::endl;
 			}
 			else if (objectList[i]->GetShapeType() == 1 && objectList[k]->GetShapeType() == 0) // if one object is a circle and the other a rectangle
@@ -145,7 +146,7 @@ void Game_Engine::CollisionCheck()
 				float circleRadius =						objectList[i]->GetRadius();
 				sf::Vector2f circleCenter =					objectList[i]->GetPosition();
 				std::vector<sf::Vector2f> vertices =		objectList[k]->GetVertices(objectList[k]->GetPointCount());
-				if (engineTools.SATCircleToPolyCollision(circleCenter, circleRadius, vertices, normal, depth)) { CollisionResolve(i, k, normal, depth); };
+				if (engineTools.SATCircleToPolyCollision(circleCenter, circleRadius, vertices, normal, depth)) { CollisionResolve(i, k, normal, depth); }
 				//std::cout << "circ and rect collision" << std::endl;
 			}
 			else if (objectList[i]->GetShapeType() == 1 && objectList[k]->GetShapeType() == 1) // if both objects are circles
@@ -154,7 +155,7 @@ void Game_Engine::CollisionCheck()
 				sf::Vector2f circleCenterA =				objectList[i]->GetPosition();
 				sf::Vector2f circleCenterB =				objectList[k]->GetPosition();
 				float circleRadiusB =						objectList[k]->GetRadius();
-				if (engineTools.CircleCollision(circleCenterA, circleRadiusA, circleCenterB, circleRadiusB, normal, depth)) { CollisionResolve(i, k, normal, depth); };
+				if (engineTools.CircleCollision(circleCenterA, circleRadiusA, circleCenterB, circleRadiusB, normal, depth)) { CollisionResolve(i, k, normal, depth); }
 				//std::cout << "circ collision" << std::endl;
 			}
 			
