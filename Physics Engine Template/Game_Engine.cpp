@@ -28,6 +28,7 @@ void Game_Engine::initVariables() // basic initialization function
 	drag = 0.95f; // higher number = less drag
 	engineTools = Engine_Tools();
 	objectList = std::vector<Rigid_Body*>();
+
 	rectangleA = new Rigid_Body(true, true, 1);
 	rectangleA->SetRadius(50);
 	rectangleA->SetColor(sf::Color::Red);
@@ -38,10 +39,16 @@ void Game_Engine::initVariables() // basic initialization function
 	rectangleB->SetSize(sf::Vector2f(100, 50));
 	rectangleB->SetColor(sf::Color::Green);
 	rectangleB->SetPosition(sf::Vector2f(400, 500));
+
+	orgin = new Rigid_Body(true, false, 1);
+	orgin->SetRadius(5);
+
+
 	objectList.push_back(rectangleA);
 	objectList.push_back(rectangleB);
+	objectList.push_back(orgin);
 
-	rectangleA->GetCircle().setOrigin(rectangleA->GetRadius(), rectangleA->GetRadius());
+
 }
 
 void Game_Engine::PollEvents()
@@ -177,6 +184,7 @@ void Game_Engine::Update()
 {
 	PhysicsUpdate();
 	CollisionCheck();
+	orgin->SetPosition(rectangleA->GetOrigin());
 	for (int i = 0; i < objectList.size(); i++)
 	{
 		objectList[i]->Update(gravity);

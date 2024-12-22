@@ -24,6 +24,7 @@ private:
 	// test variables
 	Rigid_Body*	rectangleA;
 	Rigid_Body*	rectangleB;
+	Rigid_Body* orgin;
 
 
 public:
