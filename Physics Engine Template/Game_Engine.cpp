@@ -28,15 +28,20 @@ void Game_Engine::initVariables() // basic initialization function
 	drag = 0.95f; // higher number = less drag
 	engineTools = Engine_Tools();
 	objectList = std::vector<Rigid_Body*>();
-	rectangleA = new Rigid_Body_Rectangle(true, true, sf::Vector2f(400, 400), 0, 0);
-	rectangleA->SetSize(sf::Vector2f(100, 100));
+	rectangleA = new Rigid_Body(true, true, 1);
+	rectangleA->SetRadius(50);
 	rectangleA->SetColor(sf::Color::Red);
-	rectangleB = new Rigid_Body_Rectangle(false, true, sf::Vector2f(500, 500), 0, 0);
-	rectangleB->SetSize(sf::Vector2f(100, 100));
-	rectangleB->SetColor(sf::Color::Blue);
+	rectangleA->SetPosition(sf::Vector2f(400, 400));
+
+	rectangleB = new Rigid_Body(false, true, 0);
+	//rectangleB->SetRadius(50);
+	rectangleB->SetSize(sf::Vector2f(100, 50));
+	rectangleB->SetColor(sf::Color::Green);
+	rectangleB->SetPosition(sf::Vector2f(400, 500));
 	objectList.push_back(rectangleA);
 	objectList.push_back(rectangleB);
 
+	rectangleA->GetCircle().setOrigin(rectangleA->GetRadius(), rectangleA->GetRadius());
 }
 
 void Game_Engine::PollEvents()
@@ -75,27 +80,27 @@ void Game_Engine::CollisionResolve(int indexShapeA, int indexShapeB, sf::Vector2
 	{
 		return;
 	}
-	if (rectangleA->GetLockedPosition() && rectangleB->GetLockedPosition()) // if both objects are locked
+	if (objectList[indexShapeA]->GetLockedPosition() && objectList[indexShapeB]->GetLockedPosition()) // if both objects are locked
 	{
 		return;
 	}
 	if (!(objectList[indexShapeA]->GetLockedPosition() || objectList[indexShapeB]->GetLockedPosition())) // if neither object is locked
 	{
-		objectList[indexShapeA]->SetPosition(objectList[indexShapeA]->GetRectangle().getPosition() + normal * depth / 2.f); // move each object half the depth
-		objectList[indexShapeB]->SetPosition(objectList[indexShapeB]->GetRectangle().getPosition() - normal * depth / 2.f);
+		objectList[indexShapeA]->SetPosition(objectList[indexShapeA]->GetPosition() + normal * depth / 2.f); // move each object half the depth
+		objectList[indexShapeB]->SetPosition(objectList[indexShapeB]->GetPosition() - normal * depth / 2.f);
 		objectList[indexShapeA]->SetVelocity(objectList[indexShapeA]->GetVelocity() - normal * (normal.x * objectList[indexShapeA]->GetVelocity().x + normal.y * objectList[indexShapeA]->GetVelocity().y)); // apply the normal to the velocity
 		objectList[indexShapeB]->SetVelocity(objectList[indexShapeB]->GetVelocity() - normal * (normal.x * objectList[indexShapeB]->GetVelocity().x + normal.y * objectList[indexShapeB]->GetVelocity().y));
 		return; // return to prevent further calculations
 	}
 	if (objectList[indexShapeA]->GetLockedPosition()) // if object A is locked
 	{
-		objectList[indexShapeB]->SetPosition(objectList[indexShapeB]->GetRectangle().getPosition() - normal * depth); // move object B the full depth
+		objectList[indexShapeB]->SetPosition(objectList[indexShapeB]->GetPosition() - normal * depth); // move object B the full depth
 		objectList[indexShapeB]->SetVelocity(objectList[indexShapeB]->GetVelocity() - normal * (normal.x * objectList[indexShapeB]->GetVelocity().x + normal.y * objectList[indexShapeB]->GetVelocity().y));
 		return;
 	}
 	if (objectList[indexShapeB]->GetLockedPosition()) // if object B is locked
 	{
-		objectList[indexShapeA]->SetPosition(objectList[indexShapeA]->GetRectangle().getPosition() + normal * depth); // move object A the full depth
+		objectList[indexShapeA]->SetPosition(objectList[indexShapeA]->GetPosition() + normal * depth); // move object A the full depth
 		objectList[indexShapeA]->SetVelocity(objectList[indexShapeA]->GetVelocity() - normal * (normal.x * objectList[indexShapeA]->GetVelocity().x + normal.y * objectList[indexShapeA]->GetVelocity().y));
 		return;
 	}
@@ -115,6 +120,7 @@ void Game_Engine::CollisionCheck()
 				std::vector<sf::Vector2f> verticesA =		objectList[i]->GetVertices(objectList[i]->GetPointCount()); // create an array of vertices for each object
 				std::vector<sf::Vector2f> verticesB =		objectList[k]->GetVertices(objectList[k]->GetPointCount());
 				if (engineTools.SATPolygonCollision(verticesA, verticesB, normal, depth)) { CollisionResolve(i, k, normal, depth); }; // check for collision and resolve it
+				//std::cout << "rect collision" << std::endl;
 			}
 			else if (objectList[i]->GetShapeType() == 0 && objectList[k]->GetShapeType() == 1) // if one object is a rectangle and the other a circle. might be able to make this prettier later
 			{
@@ -122,6 +128,7 @@ void Game_Engine::CollisionCheck()
 				sf::Vector2f circleCenter =					objectList[k]->GetPosition();
 				std::vector<sf::Vector2f>vertices =			objectList[i]->GetVertices(objectList[i]->GetPointCount());
 				if (engineTools.SATCircleToPolyCollision(circleCenter, circleRadius, vertices, normal, depth)) { CollisionResolve(i, k, normal, depth); };
+				//std::cout << "rect and circ collision" << std::endl;
 			}
 			else if (objectList[i]->GetShapeType() == 1 && objectList[k]->GetShapeType() == 0) // if one object is a circle and the other a rectangle
 			{
@@ -129,6 +136,7 @@ void Game_Engine::CollisionCheck()
 				sf::Vector2f circleCenter =					objectList[i]->GetPosition();
 				std::vector<sf::Vector2f> vertices =		objectList[k]->GetVertices(objectList[k]->GetPointCount());
 				if (engineTools.SATCircleToPolyCollision(circleCenter, circleRadius, vertices, normal, depth)) { CollisionResolve(i, k, normal, depth); };
+				//std::cout << "circ and rect collision" << std::endl;
 			}
 			else if (objectList[i]->GetShapeType() == 1 && objectList[k]->GetShapeType() == 1) // if both objects are circles
 			{
@@ -137,6 +145,7 @@ void Game_Engine::CollisionCheck()
 				sf::Vector2f circleCenterB =				objectList[k]->GetPosition();
 				float circleRadiusB =						objectList[k]->GetRadius();
 				if (engineTools.CircleCollision(circleCenterA, circleRadiusA, circleCenterB, circleRadiusB, normal, depth)) { CollisionResolve(i, k, normal, depth); };
+				//std::cout << "circ collision" << std::endl;
 			}
 			
 		}
@@ -170,10 +179,11 @@ void Game_Engine::Update()
 	CollisionCheck();
 	for (int i = 0; i < objectList.size(); i++)
 	{
-		objectList[i]->Update(gravity, objectList[i]->GetShapeType());
+		objectList[i]->Update(gravity);
 	}
 	PollEvents();
 	Movement();
+	rectangleA->SetRadius(rectangleA->GetRadius() + 0.1f);
 }
 
 void Game_Engine::Render()

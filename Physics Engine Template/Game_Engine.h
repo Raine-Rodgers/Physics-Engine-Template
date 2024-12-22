@@ -22,8 +22,8 @@ private:
 	std::vector<Rigid_Body*> objectList;
 
 	// test variables
-	Rigid_Body_Rectangle*	rectangleA;
-	Rigid_Body_Rectangle*	rectangleB;
+	Rigid_Body*	rectangleA;
+	Rigid_Body*	rectangleB;
 
 
 public:
