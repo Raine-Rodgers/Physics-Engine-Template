@@ -26,6 +26,8 @@ private:
 	Rigid_Body*	rectangleB;
 	Rigid_Body* orgin;
 
+	int count = 0;
+
 
 public:
 	const bool				running() const { return this->window->isOpen(); } // returns if the window is open or not

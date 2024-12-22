@@ -30,9 +30,10 @@ void Game_Engine::initVariables() // basic initialization function
 	objectList = std::vector<Rigid_Body*>();
 
 	rectangleA = new Rigid_Body(true, true, 1);
-	rectangleA->SetRadius(50);
 	rectangleA->SetColor(sf::Color::Red);
 	rectangleA->SetPosition(sf::Vector2f(400, 400));
+	rectangleA->SetRadius(50);
+	rectangleA->SetOrigin();
 
 	rectangleB = new Rigid_Body(false, true, 0);
 	//rectangleB->SetRadius(50);
@@ -41,7 +42,9 @@ void Game_Engine::initVariables() // basic initialization function
 	rectangleB->SetPosition(sf::Vector2f(400, 500));
 
 	orgin = new Rigid_Body(true, false, 1);
+	orgin->SetPosition(rectangleA->GetPosition());
 	orgin->SetRadius(5);
+	orgin->SetOrigin();
 
 
 	objectList.push_back(rectangleA);
@@ -184,14 +187,15 @@ void Game_Engine::Update()
 {
 	PhysicsUpdate();
 	CollisionCheck();
-	orgin->SetPosition(rectangleA->GetOrigin());
+	
+	orgin->SetPosition(rectangleA->GetPosition());
+
 	for (int i = 0; i < objectList.size(); i++)
 	{
 		objectList[i]->Update(gravity);
 	}
 	PollEvents();
 	Movement();
-	rectangleA->SetRadius(rectangleA->GetRadius() + 0.1f);
 }
 
 void Game_Engine::Render()
