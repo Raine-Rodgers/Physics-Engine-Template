@@ -24,33 +24,40 @@ protected:
 public:
 
 	// Accessors and Modifiers
-	sf::Vector2f					GetVelocity()									{ return this->_velocity; }
-	sf::Vector2f					GetPosition()									{ return this->_position; }
-	float							GetTerminalVelocity()							{ return this->_terminalVelocity; }
-	float							GetMass()										{ return this->_mass; }
-	float							GetFriction()									{ return this->_friction; }
-	bool							GetLockedPosition()								{ return this->_lockedPosition; }
-	bool							GetCollidable()									{ return this->_collidable; }
+	sf::Vector2f					GetVelocity()									{ return _velocity; }
+	sf::Vector2f					GetPosition()									{ return _position; }
+	float							GetTerminalVelocity()							{ return _terminalVelocity; }
+	float							GetMass()										{ return _mass; }
+	float							GetFriction()									{ return _friction; }
+	bool							GetLockedPosition()								{ return _lockedPosition; }
+	bool							GetCollidable()									{ return _collidable; }
+	int								GetShapeType()									{ return _shapeType; }
 
-	sf::CircleShape					GetCircle()										{ return this->_circle; }
-	float							GetRadius()										{ return this->_circle.getRadius(); }
 
-	sf::RectangleShape				GetRectangle()									{ return this->_rectangle; }
-	int								GetShapeType()									{ return this->_shapeType; }
-	int								GetPointCount()									{ return this->_rectangle.getPointCount(); }
+	sf::CircleShape					GetCircle()										{ return _circle; }
+	float							GetRadius()										{ return _circle.getRadius(); }
+	void							SetRadius(float radius)							{ _circle.setRadius(radius); }
+
+	sf::RectangleShape				GetRectangle()									{ return _rectangle; }
+	int								GetPointCount()									{ return _rectangle.getPointCount(); }
 	std::vector<sf::Vector2f>		GetVertices(int vertexCount);
+	float							GetRotation()									{ return _rectangle.getRotation(); }
+	sf::Vector2f					GetSize()										{ return _rectangle.getSize(); }
+	void							SetRotation(float rotation)						{ _rectangle.setRotation(rotation); }
+	void							SetSize(sf::Vector2f size)						{ _rectangle.setSize(size); }
 
-	void							SetVelocity(sf::Vector2f velocity)				{ this->_velocity = velocity; }
-	void							SetPosition(sf::Vector2f position)				{ this->_position = position; }
-	void							SetTerminalVelocity(float terminalVelocity)		{ this->_terminalVelocity = terminalVelocity; }
-	void							SetMass(float mass)								{ this->_mass = mass; }
-	void							SetFriction(float friction)						{ this->_friction = friction; }
-	void							SetLockedPosition(bool lockedPosition)			{ this->_lockedPosition = lockedPosition; }
-	void							SetCollidable(bool collidable)					{ this->_collidable = collidable; }
+	void							SetVelocity(sf::Vector2f velocity)				{ _velocity = velocity; }
+	void							SetPosition(sf::Vector2f position);
+	void							SetTerminalVelocity(float terminalVelocity)		{ _terminalVelocity = terminalVelocity; }
+	void							SetMass(float mass)								{ _mass = mass; }
+	void							SetFriction(float friction)						{ _friction = friction; }
+	void							SetLockedPosition(bool lockedPosition)			{ _lockedPosition = lockedPosition; }
+	void							SetCollidable(bool collidable)					{ _collidable = collidable; }
+	void							SetColor(sf::Color color);
 
 	// Methods
-	void							AddForce(sf::Vector2f force)					{ this->_force += force; }
-	void							Update(float gravity, int shapeType);
+	void							AddForce(sf::Vector2f force)					{ _force += force; }
+	void							Update(float gravity);
 	void							RectPhysicsUpdate(float gravity);
 	void							CircPhysicsUpdate(float gravity);
 	void							Render(sf::RenderWindow* window);

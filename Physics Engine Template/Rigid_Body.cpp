@@ -98,29 +98,64 @@ void Rigid_Body::CircPhysicsUpdate(float gravity)
 	_circle.move(_velocity * _engineTools._deltaTime.asSeconds() * _engineTools._dtMultiplier);
 }
 
-
-
-void Rigid_Body::Update(float gravity, int shapeType)
+void Rigid_Body::SetPosition(sf::Vector2f position)
 {
-	if (shapeType == 0)
+	_position = position;
+	switch (_shapeType)
 	{
-		RectPhysicsUpdate(gravity);
+	case 0:
+		_rectangle.setPosition(_position);
+		break;
+	case 1:
+		_circle.setPosition(_position);
+		break;
+	default:
+		throw std::invalid_argument("couldnt set position");
 	}
-	else if (shapeType == 1)
+}
+
+void Rigid_Body::SetColor(sf::Color color)
+{
+	switch (_shapeType)
 	{
+	case 0:
+		_rectangle.setFillColor(color);
+		break;
+	case 1:
+		_circle.setFillColor(color);
+		break;
+	default:
+		throw std::invalid_argument("couldnt change color");
+	}
+}
+
+void Rigid_Body::Update(float gravity)
+{
+	switch (_shapeType)
+	{
+	case 0:
+		RectPhysicsUpdate(gravity);
+		break;
+	case 1:
 		CircPhysicsUpdate(gravity);
+		break;
+	default:
+		throw std::invalid_argument("couldnt update");
 	}
 }
 
 void Rigid_Body::Render(sf::RenderWindow* window)
 {
-	if (_shapeType == 0)
+	switch (_shapeType)
 	{
+	case 0:
 		window->draw(_rectangle);
-	}
-	else if (_shapeType == 1)
-	{
+		break;
+	case 1:
 		window->draw(_circle);
+		break;
+	default:
+		throw std::invalid_argument("couldnt render");
 	}
 }
 
