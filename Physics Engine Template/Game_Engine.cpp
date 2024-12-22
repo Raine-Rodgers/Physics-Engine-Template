@@ -25,7 +25,7 @@ void Game_Engine::initWindow() // initializes the window with the title and size
 void Game_Engine::initVariables() // basic initialization function
 {
 	gravity = 0.f; // higher number = more gravity
-	drag = 0.95f; // higher number = less drag
+	drag = 0.99f; // higher number = less drag
 	engineTools = Engine_Tools();
 	objectList = std::vector<Rigid_Body*>();
 
@@ -168,19 +168,19 @@ void Game_Engine::Movement()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) // moves the object left
 	{
-		rectangleB->SetVelocity(sf::Vector2f(rectangleB->GetVelocity().x - 0.1f, rectangleB->GetVelocity().y));
+		rectangleB->SetVelocity(sf::Vector2f(rectangleB->GetVelocity().x - 0.5f, rectangleB->GetVelocity().y));
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) // moves the object right
 	{
-		rectangleB->SetVelocity(sf::Vector2f(rectangleB->GetVelocity().x + 0.1f, rectangleB->GetVelocity().y));
+		rectangleB->SetVelocity(sf::Vector2f(rectangleB->GetVelocity().x + 0.5f, rectangleB->GetVelocity().y));
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) // moves the object up
 	{
-		rectangleB->SetVelocity(sf::Vector2f(rectangleB->GetVelocity().x, rectangleB->GetVelocity().y - 0.1f));
+		rectangleB->SetVelocity(sf::Vector2f(rectangleB->GetVelocity().x, rectangleB->GetVelocity().y - 0.5f));
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) // moves the object down
 	{
-		rectangleB->SetVelocity(sf::Vector2f(rectangleB->GetVelocity().x, rectangleB->GetVelocity().y + 0.1f));
+		rectangleB->SetVelocity(sf::Vector2f(rectangleB->GetVelocity().x, rectangleB->GetVelocity().y + 0.5f));
 	}
 }
 
