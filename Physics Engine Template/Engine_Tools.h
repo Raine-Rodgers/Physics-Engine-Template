@@ -12,6 +12,7 @@ public:
 	sf::Clock			_clock;
 	sf::Time			_deltaTime;			// Delta time
 	float				_dtMultiplier = 30.0f; // Delta time multiplier
+	float				_depthBuffer = 0.1f; // Buffer for depth of collision
 
 	bool				SATPolygonCollision(std::vector<sf::Vector2f> verticesA, std::vector<sf::Vector2f> verticesB, sf::Vector2f& normal, float& depth); // Uses separating axis theorem to check if two polygons are colliding
 	bool				SATCircleToPolyCollision(sf::Vector2f circleCenter, float circleRadius, std::vector<sf::Vector2f> vertices, sf::Vector2f& normal, float& depth); // Uses separating axis theorem to check if a circle and a polygon are colliding

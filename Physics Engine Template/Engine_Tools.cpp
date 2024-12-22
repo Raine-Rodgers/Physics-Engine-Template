@@ -83,6 +83,7 @@ bool Engine_Tools::SATPolygonCollision(std::vector<sf::Vector2f> verticesA, std:
 		normal = -normal;
 	}
 
+    depth += _depthBuffer;
     return true;
 }
 
@@ -153,6 +154,7 @@ bool Engine_Tools::SATCircleToPolyCollision(sf::Vector2f circleCenter, float cir
         normal = -normal;
     }
 
+    depth += _depthBuffer;
     return true;
 }
 
@@ -174,6 +176,7 @@ bool Engine_Tools::CircleCollision(sf::Vector2f circleCenterA, float circleRadiu
     normal = Normalize(circleCenterA - circleCenterB);
     depth = radii - distance;
 
+    depth += _depthBuffer;
 	return true;
 }
 
