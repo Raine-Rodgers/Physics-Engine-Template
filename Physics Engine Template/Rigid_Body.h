@@ -8,12 +8,8 @@ class Rigid_Body
 {
 protected:
 	Engine_Tools					_engineTools;
-	sf::Vector2f					_velocity;
-	sf::Vector2f					_force;
 	sf::Vector2f					_position;
 	float							_terminalVelocity;
-	float							_mass;
-	float							_friction;
 	bool							_lockedPosition;
 	bool							_collidable;
 	int								_shapeType;
@@ -22,6 +18,11 @@ protected:
 	sf::CircleShape					_circle;
 
 public:
+	sf::Vector2f					_velocity;
+	sf::Vector2f					_force;
+	float							_mass;
+	float							_friction;
+	float							_restitution;
 
 	// Accessors and Modifiers
 	sf::Vector2f					GetVelocity()									{ return _velocity; }
@@ -29,6 +30,7 @@ public:
 	float							GetTerminalVelocity()							{ return _terminalVelocity; }
 	float							GetMass()										{ return _mass; }
 	float							GetFriction()									{ return _friction; }
+	float							GetRestitution()								{ return _restitution; }
 	bool							GetLockedPosition()								{ return _lockedPosition; }
 	bool							GetCollidable()									{ return _collidable; }
 	int								GetShapeType()									{ return _shapeType; }
@@ -52,6 +54,7 @@ public:
 	void							SetTerminalVelocity(float terminalVelocity)		{ _terminalVelocity = terminalVelocity; }
 	void							SetMass(float mass)								{ _mass = mass; }
 	void							SetFriction(float friction)						{ _friction = friction; }
+	void							SetRestitution(float restitution)				{ _restitution = restitution; }
 	void							SetLockedPosition(bool lockedPosition)			{ _lockedPosition = lockedPosition; }
 	void							SetCollidable(bool collidable)					{ _collidable = collidable; }
 	void							SetColor(sf::Color color);
@@ -66,7 +69,7 @@ public:
 	// Constructors and Destructors
 	Rigid_Body();
 	Rigid_Body(bool lockedPosition, bool collidable, int shapeType);
-	Rigid_Body(sf::Vector2f velocity,float mass, float friction, bool lockedPosition, float terminalVelocity, bool collidable, int shapeType);
+	Rigid_Body(sf::Vector2f velocity,float mass, float friction, bool lockedPosition, float terminalVelocity, bool collidable, int shapeType, float restitution);
 	~Rigid_Body();
 };
 

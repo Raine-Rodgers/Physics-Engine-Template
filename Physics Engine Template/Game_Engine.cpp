@@ -29,7 +29,7 @@ void Game_Engine::initVariables() // basic initialization function
 	engineTools = Engine_Tools();
 	objectList = std::vector<Rigid_Body*>();
 
-	rectangleA = new Rigid_Body(true, true, 1);
+	rectangleA = new Rigid_Body(false, true, 1);
 	//rectangleA->SetSize(sf::Vector2f(100, 50));
 	rectangleA->SetColor(sf::Color::Red);
 	rectangleA->SetPosition(sf::Vector2f(400, 400));
@@ -88,6 +88,20 @@ void Game_Engine::PhysicsUpdate()
 
 void Game_Engine::CollisionResolve(int indexShapeA, int indexShapeB, sf::Vector2f normal, float depth)
 {
+	sf::Vector2f relativeVelocity = objectList[indexShapeB]->GetVelocity() - objectList[indexShapeA]->GetVelocity(); // calculates the relative velocity
+
+	float e = engineTools.MinValue(objectList[indexShapeA]->GetRestitution(), objectList[indexShapeB]->GetRestitution()); // calculates the restitution
+
+	float j = -(1 - e) * engineTools.DotProduct(relativeVelocity, normal);
+
+
+	//j /= (engineTools.DotProduct(normal, normal) * (1 / objectList[indexShapeA]->_mass + 1 / objectList[indexShapeB]->_mass)); // calculates the impulse
+	j /= (1.f / objectList[indexShapeA]->_mass + (1.f / objectList[indexShapeB]->_mass)); // calculates the impulse
+	objectList[indexShapeA]->SetVelocity(objectList[indexShapeA]->GetVelocity() - j / objectList[indexShapeA]->_mass * normal); // applies the impulse to the velocity
+	objectList[indexShapeB]->SetVelocity(objectList[indexShapeB]->GetVelocity() + j / objectList[indexShapeB]->_mass * normal);
+
+	//objectList[indexShapeA]->SetVelocity({5, 5});
+
 	if (!(objectList[indexShapeA]->GetCollidable() || objectList[indexShapeB]->GetCollidable())) // if either object is not collidable
 	{
 		return;
@@ -170,19 +184,20 @@ void Game_Engine::Movement()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) // moves the object left
 	{
-		rectangleB->SetVelocity(sf::Vector2f(rectangleB->GetVelocity().x - 0.5f, rectangleB->GetVelocity().y));
+		//rectangleB->SetVelocity(sf::Vector2f(rectangleB->GetVelocity().x - 0.5f, rectangleB->GetVelocity().y));
+		rectangleB->AddForce(sf::Vector2f(-0.5f, 0));
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) // moves the object right
 	{
-		rectangleB->SetVelocity(sf::Vector2f(rectangleB->GetVelocity().x + 0.5f, rectangleB->GetVelocity().y));
+		rectangleB->AddForce(sf::Vector2f(0.5f, 0));
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) // moves the object up
 	{
-		rectangleB->SetVelocity(sf::Vector2f(rectangleB->GetVelocity().x, rectangleB->GetVelocity().y - 0.5f));
+		rectangleB->AddForce(sf::Vector2f(0, -0.5f));
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) // moves the object down
 	{
-		rectangleB->SetVelocity(sf::Vector2f(rectangleB->GetVelocity().x, rectangleB->GetVelocity().y + 0.5f));
+		rectangleB->AddForce(sf::Vector2f(0, 0.5f));
 	}
 }
 
@@ -190,6 +205,7 @@ void Game_Engine::Update()
 {
 	PhysicsUpdate();
 	CollisionCheck();
+	std::cout << rectangleA->_velocity.x << ", " << rectangleA->_velocity.y << "\n";
 	
 	orgin->SetPosition(rectangleA->GetPosition());
 

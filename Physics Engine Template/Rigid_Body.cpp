@@ -11,6 +11,7 @@ Rigid_Body::Rigid_Body()
 	this->_terminalVelocity = 20.f;
 	this->_force = sf::Vector2f(0, 0);
 	this->_shapeType = 0;
+	this->_restitution = 0.5f;
 }
 
 Rigid_Body::Rigid_Body(bool lockedPosition, bool collidable, int shapeType)
@@ -23,9 +24,10 @@ Rigid_Body::Rigid_Body(bool lockedPosition, bool collidable, int shapeType)
 	this->_terminalVelocity = 20.f; // havent done anything yet with this
 	this->_force = sf::Vector2f(0, 0);
 	this->_shapeType = shapeType;
+	this->_restitution = 0.5f;
 }
 
-Rigid_Body::Rigid_Body(sf::Vector2f velocity, float mass, float friction, bool lockedPosition, float terminalVelocity, bool collidable, int shapeType)
+Rigid_Body::Rigid_Body(sf::Vector2f velocity, float mass, float friction, bool lockedPosition, float terminalVelocity, bool collidable, int shapeType, float restitution)
 {
 	this->_velocity = velocity;
 	this->_mass = mass;
@@ -35,6 +37,7 @@ Rigid_Body::Rigid_Body(sf::Vector2f velocity, float mass, float friction, bool l
 	this->_terminalVelocity = terminalVelocity;
 	this->_force = sf::Vector2f(0, 0);
 	this->_shapeType = shapeType;
+	this->_restitution = restitution;
 }
 
 Rigid_Body::~Rigid_Body()
@@ -66,7 +69,7 @@ void Rigid_Body::RectPhysicsUpdate(float gravity)
 		_position = _rectangle.getPosition();
 		_velocity += _force * _engineTools.DetlaTime();
 		_rectangle.move(_velocity * _engineTools.DetlaTime());
-		_force = sf::Vector2f(0, 0);
+		_force = { 0, 0 };
 		return;
 	}
 
@@ -89,7 +92,7 @@ void Rigid_Body::CircPhysicsUpdate(float gravity)
 		_position = _circle.getPosition();
 		_velocity += _force * _engineTools.DetlaTime();
 		_circle.move(_velocity * _engineTools.DetlaTime());
-		_force = sf::Vector2f(0, 0);
+		_force = { 0, 0 };
 		return;
 	}
 
@@ -131,6 +134,7 @@ void Rigid_Body::SetColor(sf::Color color)
 
 void Rigid_Body::Update(float gravity)
 {
+
 	switch (_shapeType)
 	{
 	case 0:
@@ -142,8 +146,6 @@ void Rigid_Body::Update(float gravity)
 	default:
 		throw std::invalid_argument("couldnt update");
 	}
-
-	_velocity += _force * _engineTools.DetlaTime();
 }
 
 void Rigid_Body::Render(sf::RenderWindow* window)

@@ -24,7 +24,7 @@ Rigid_Body_Circle::Rigid_Body_Circle(bool _lockedPosition, bool collidable, int 
 }
 
 Rigid_Body_Circle::Rigid_Body_Circle(sf::Vector2f _velocity, float mass, float friction, float radius, sf::Vector2f, bool _lockedPosition, bool collidable, float _terminalVelocity, int shapeType)
-: Rigid_Body(_velocity, mass, friction, _lockedPosition, _terminalVelocity, collidable, shapeType)
+: Rigid_Body(_velocity, mass, friction, _lockedPosition, _terminalVelocity, collidable, shapeType, 0.5f)
 {
 	this->radius = radius;
 	this->_position = _position;

@@ -21,7 +21,7 @@ Rigid_Body_Rectangle::Rigid_Body_Rectangle(bool _lockedPosition, bool collidable
 }
 
 Rigid_Body_Rectangle::Rigid_Body_Rectangle(sf::Vector2f _velocity, float mass, float friction, sf::Vector2f size, sf::Vector2f _position, bool _lockedPosition, bool collidable, float _terminalVelocity, int shapeType)
-: Rigid_Body(_velocity, mass, friction, _lockedPosition, _terminalVelocity, collidable, shapeType)
+: Rigid_Body(_velocity, mass, friction, _lockedPosition, _terminalVelocity, collidable, shapeType, 0.5f)
 {
 	this->size = size;
 	this->_position = _position;
