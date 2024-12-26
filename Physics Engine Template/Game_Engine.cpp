@@ -92,13 +92,12 @@ void Game_Engine::CollisionResolve(int indexShapeA, int indexShapeB, sf::Vector2
 
 	float e = engineTools.MinValue(objectList[indexShapeA]->GetRestitution(), objectList[indexShapeB]->GetRestitution()); // calculates the restitution
 
-	float j = -(1 - e) * engineTools.DotProduct(relativeVelocity, normal);
+	float j = -(1 + e) * engineTools.DotProduct(relativeVelocity, normal);
 
 
 	//j /= (engineTools.DotProduct(normal, normal) * (1 / objectList[indexShapeA]->_mass + 1 / objectList[indexShapeB]->_mass)); // calculates the impulse
 	j /= (1.f / objectList[indexShapeA]->_mass + (1.f / objectList[indexShapeB]->_mass)); // calculates the impulse
-	objectList[indexShapeA]->SetVelocity(objectList[indexShapeA]->GetVelocity() - j / objectList[indexShapeA]->_mass * normal); // applies the impulse to the velocity
-	objectList[indexShapeB]->SetVelocity(objectList[indexShapeB]->GetVelocity() + j / objectList[indexShapeB]->_mass * normal);
+
 
 	//objectList[indexShapeA]->SetVelocity({5, 5});
 
@@ -114,8 +113,12 @@ void Game_Engine::CollisionResolve(int indexShapeA, int indexShapeB, sf::Vector2
 	{
 		objectList[indexShapeA]->SetPosition(objectList[indexShapeA]->GetPosition() + normal * depth / 2.f); // move each object half the depth
 		objectList[indexShapeB]->SetPosition(objectList[indexShapeB]->GetPosition() - normal * depth / 2.f);
-		objectList[indexShapeA]->SetVelocity(objectList[indexShapeA]->GetVelocity() - normal * (normal.x * objectList[indexShapeA]->GetVelocity().x + normal.y * objectList[indexShapeA]->GetVelocity().y)); // apply the normal to the velocity
-		objectList[indexShapeB]->SetVelocity(objectList[indexShapeB]->GetVelocity() - normal * (normal.x * objectList[indexShapeB]->GetVelocity().x + normal.y * objectList[indexShapeB]->GetVelocity().y));
+
+		objectList[indexShapeA]->SetVelocity(objectList[indexShapeA]->GetVelocity() - j / objectList[indexShapeA]->_mass * normal); // applies the impulse to the velocity
+		objectList[indexShapeB]->SetVelocity(objectList[indexShapeB]->GetVelocity() + j / objectList[indexShapeB]->_mass * normal);
+
+		//objectList[indexShapeA]->SetVelocity(objectList[indexShapeA]->GetVelocity() - normal * (normal.x * objectList[indexShapeA]->GetVelocity().x + normal.y * objectList[indexShapeA]->GetVelocity().y)); // apply the normal to the velocity
+		//objectList[indexShapeB]->SetVelocity(objectList[indexShapeB]->GetVelocity() - normal * (normal.x * objectList[indexShapeB]->GetVelocity().x + normal.y * objectList[indexShapeB]->GetVelocity().y));
 		return; // return to prevent further calculations
 	}
 	if (objectList[indexShapeA]->GetLockedPosition()) // if object A is locked
@@ -205,7 +208,6 @@ void Game_Engine::Update()
 {
 	PhysicsUpdate();
 	CollisionCheck();
-	std::cout << rectangleA->_velocity.x << ", " << rectangleA->_velocity.y << "\n";
 	
 	orgin->SetPosition(rectangleA->GetPosition());
 
