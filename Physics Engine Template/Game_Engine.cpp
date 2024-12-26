@@ -29,7 +29,7 @@ void Game_Engine::initVariables() // basic initialization function
 	engineTools = Engine_Tools();
 	objectList = std::vector<Rigid_Body*>();
 
-	rectangleA = new Rigid_Body(false, true, 1);
+	rectangleA = new Rigid_Body(true, true, 1);
 	//rectangleA->SetSize(sf::Vector2f(100, 50));
 	rectangleA->SetColor(sf::Color::Red);
 	rectangleA->SetPosition(sf::Vector2f(400, 400));
@@ -124,14 +124,18 @@ void Game_Engine::CollisionResolve(int indexShapeA, int indexShapeB, sf::Vector2
 	if (objectList[indexShapeA]->GetLockedPosition()) // if object A is locked
 	{
 		objectList[indexShapeB]->SetPosition(objectList[indexShapeB]->GetPosition() - normal * depth); // move object B the full depth
-		objectList[indexShapeB]->SetVelocity(objectList[indexShapeB]->GetVelocity() - normal * (normal.x * objectList[indexShapeB]->GetVelocity().x + normal.y * objectList[indexShapeB]->GetVelocity().y));
+		objectList[indexShapeB]->SetVelocity(objectList[indexShapeB]->GetVelocity() + j / objectList[indexShapeB]->_mass * normal);
+		
+		//objectList[indexShapeB]->SetVelocity(objectList[indexShapeB]->GetVelocity() - normal * (normal.x * objectList[indexShapeB]->GetVelocity().x + normal.y * objectList[indexShapeB]->GetVelocity().y));
 		return;
 	}
 	if (objectList[indexShapeB]->GetLockedPosition()) // if object B is locked
 	{
 		///////////// CHANGE " + NORMAL" TO "- NORMAL" IF HAVING COLLISION ISSUE //////////////
 		objectList[indexShapeA]->SetPosition(objectList[indexShapeA]->GetPosition() + normal * depth); // move object A the full depth
-		objectList[indexShapeA]->SetVelocity(objectList[indexShapeA]->GetVelocity() - normal * (normal.x * objectList[indexShapeA]->GetVelocity().x + normal.y * objectList[indexShapeA]->GetVelocity().y));
+		objectList[indexShapeA]->SetVelocity(objectList[indexShapeA]->GetVelocity() - j / objectList[indexShapeA]->_mass * normal);
+		
+		//objectList[indexShapeA]->SetVelocity(objectList[indexShapeA]->GetVelocity() - normal * (normal.x * objectList[indexShapeA]->GetVelocity().x + normal.y * objectList[indexShapeA]->GetVelocity().y));
 		return;
 	}
 }
