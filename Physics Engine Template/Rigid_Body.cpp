@@ -64,15 +64,15 @@ void Rigid_Body::RectPhysicsUpdate(float gravity)
 	{
 		_velocity.y += gravity;
 		_position = _rectangle.getPosition();
-		_velocity += _force * _engineTools._deltaTime.asSeconds() * _engineTools._dtMultiplier;
-		_rectangle.move(_velocity * _engineTools._deltaTime.asSeconds() * _engineTools._dtMultiplier);
+		_velocity += _force * _engineTools.DetlaTime();
+		_rectangle.move(_velocity * _engineTools.DetlaTime());
 		_force = sf::Vector2f(0, 0);
 		return;
 	}
 
 	_velocity.y = _terminalVelocity;
 	_position = _rectangle.getPosition();
-	_rectangle.move(_velocity * _engineTools._deltaTime.asSeconds() * _engineTools._dtMultiplier);
+	_rectangle.move(_velocity * _engineTools.DetlaTime());
 }
 
 void Rigid_Body::CircPhysicsUpdate(float gravity)
@@ -87,15 +87,15 @@ void Rigid_Body::CircPhysicsUpdate(float gravity)
 	{
 		_velocity.y += gravity;
 		_position = _circle.getPosition();
-		_velocity += _force * _engineTools._deltaTime.asSeconds() * _engineTools._dtMultiplier;
-		_circle.move(_velocity * _engineTools._deltaTime.asSeconds() * _engineTools._dtMultiplier);
+		_velocity += _force * _engineTools.DetlaTime();
+		_circle.move(_velocity * _engineTools.DetlaTime());
 		_force = sf::Vector2f(0, 0);
 		return;
 	}
 
 	_velocity.y = _terminalVelocity;
 	_position = _circle.getPosition();
-	_circle.move(_velocity * _engineTools._deltaTime.asSeconds() * _engineTools._dtMultiplier);
+	_circle.move(_velocity * _engineTools.DetlaTime());
 }
 
 void Rigid_Body::SetPosition(sf::Vector2f position)
@@ -142,6 +142,8 @@ void Rigid_Body::Update(float gravity)
 	default:
 		throw std::invalid_argument("couldnt update");
 	}
+
+	_velocity += _force * _engineTools.DetlaTime();
 }
 
 void Rigid_Body::Render(sf::RenderWindow* window)

@@ -22,6 +22,7 @@ public:
 	float				DotProduct(sf::Vector2f a, sf::Vector2f b);
 	float				Length(sf::Vector2f a);
 	float				Distance(sf::Vector2f a, sf::Vector2f b);
+	float				DetlaTime() { return _deltaTime.asSeconds() * _dtMultiplier; }
 	sf::Vector2f		Normalize(sf::Vector2f a);
 	sf::Vector2f		ArithmaticMean(std::vector<sf::Vector2f> vertices);
 
