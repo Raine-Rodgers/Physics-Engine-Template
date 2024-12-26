@@ -37,7 +37,7 @@ public:
 	sf::CircleShape					GetCircle()										{ return _circle; }
 	float							GetRadius()										{ return _circle.getRadius(); }
 	void							SetRadius(float radius)							{ _circle.setRadius(radius); }
-	void							SetOrigin() { _circle.setOrigin(_circle.getRadius(), _circle.getRadius()); std::cout << _circle.getRadius(); }
+	void							SetOrigin() { _circle.setOrigin(_circle.getRadius(), _circle.getRadius()); }
 
 	sf::RectangleShape				GetRectangle()									{ return _rectangle; }
 	int								GetPointCount()									{ return _rectangle.getPointCount(); }

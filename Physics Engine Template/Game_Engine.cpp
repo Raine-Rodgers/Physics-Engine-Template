@@ -30,16 +30,18 @@ void Game_Engine::initVariables() // basic initialization function
 	objectList = std::vector<Rigid_Body*>();
 
 	rectangleA = new Rigid_Body(true, true, 1);
+	//rectangleA->SetSize(sf::Vector2f(100, 50));
 	rectangleA->SetColor(sf::Color::Red);
 	rectangleA->SetPosition(sf::Vector2f(400, 400));
 	rectangleA->SetRadius(50);
 	rectangleA->SetOrigin();
 
-	rectangleB = new Rigid_Body(false, true, 0);
-	//rectangleB->SetRadius(50);
+	rectangleB = new Rigid_Body(false, true, 1);
 	rectangleB->SetSize(sf::Vector2f(100, 50));
 	rectangleB->SetColor(sf::Color::Green);
 	rectangleB->SetPosition(sf::Vector2f(400, 500));
+	rectangleB->SetRadius(50);
+	rectangleB->SetOrigin();
 
 	orgin = new Rigid_Body(true, false, 1);
 	orgin->SetPosition(rectangleA->GetPosition());
@@ -49,7 +51,7 @@ void Game_Engine::initVariables() // basic initialization function
 
 	objectList.push_back(rectangleA);
 	objectList.push_back(rectangleB);
-	objectList.push_back(orgin);
+	//objectList.push_back(orgin);
 
 
 }
@@ -104,7 +106,7 @@ void Game_Engine::CollisionResolve(int indexShapeA, int indexShapeB, sf::Vector2
 	}
 	if (objectList[indexShapeA]->GetLockedPosition()) // if object A is locked
 	{
-		objectList[indexShapeB]->SetPosition(objectList[indexShapeB]->GetPosition() + normal * depth); // move object B the full depth
+		objectList[indexShapeB]->SetPosition(objectList[indexShapeB]->GetPosition() - normal * depth); // move object B the full depth
 		objectList[indexShapeB]->SetVelocity(objectList[indexShapeB]->GetVelocity() - normal * (normal.x * objectList[indexShapeB]->GetVelocity().x + normal.y * objectList[indexShapeB]->GetVelocity().y));
 		return;
 	}
@@ -147,7 +149,7 @@ void Game_Engine::CollisionCheck()
 				sf::Vector2f circleCenter =					objectList[i]->GetPosition();
 				std::vector<sf::Vector2f> vertices =		objectList[k]->GetVertices(objectList[k]->GetPointCount());
 				if (engineTools.SATCircleToPolyCollision(circleCenter, circleRadius, vertices, normal, depth)) { CollisionResolve(i, k, normal, depth); }
-				//std::cout << "circ and rect collision" << std::endl;
+				
 			}
 			else if (objectList[i]->GetShapeType() == 1 && objectList[k]->GetShapeType() == 1) // if both objects are circles
 			{
@@ -156,7 +158,7 @@ void Game_Engine::CollisionCheck()
 				sf::Vector2f circleCenterB =				objectList[k]->GetPosition();
 				float circleRadiusB =						objectList[k]->GetRadius();
 				if (engineTools.CircleCollision(circleCenterA, circleRadiusA, circleCenterB, circleRadiusB, normal, depth)) { CollisionResolve(i, k, normal, depth); }
-				//std::cout << "circ collision" << std::endl;
+				
 			}
 			
 		}

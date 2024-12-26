@@ -78,7 +78,7 @@ bool Engine_Tools::SATPolygonCollision(std::vector<sf::Vector2f> verticesA, std:
 
     sf::Vector2f centerDirection = centerA - centerB;
 
-    if (DotProduct(centerDirection, normal) < 0.f) // if the center direction is less than 0 then the normal is flipped
+    if ((DotProduct(centerDirection, normal) < 0.f)) // if the center direction is less than 0 then the normal is flipped
 	{
 		normal = -normal;
 	}
@@ -149,7 +149,7 @@ bool Engine_Tools::SATCircleToPolyCollision(sf::Vector2f circleCenter, float cir
 
     sf::Vector2f centerDirection = polygonCenter - circleCenter;
 
-    if (DotProduct(centerDirection, normal) < 0.f)
+    if (DotProduct(centerDirection, normal) > 0.f) // if the center direction is more than 0 then the normal is flipped. the normals for this function are being weird and acting flipped but i cant see whats causing this
     {
         normal = -normal;
     }
@@ -162,21 +162,17 @@ bool Engine_Tools::CircleCollision(sf::Vector2f circleCenterA, float circleRadiu
 {
     float distance = Distance(circleCenterA, circleCenterB);
     float radii = circleRadiusA + circleRadiusB;
-
     normal = sf::Vector2f(0, 0);
     depth = float(INT_MIN);
-
     depth = radii - distance;
-
     if (distance >= radii)
     {
 		return false;
 	}
 
     normal = Normalize(circleCenterA - circleCenterB);
-    depth = radii - distance;
-
     depth += _depthBuffer;
+
 	return true;
 }
 
