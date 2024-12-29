@@ -9,6 +9,7 @@ class Rigid_Body
 protected:
 	Engine_Tools					_engineTools;
 	sf::Vector2f					_position;
+	sf::Vector2f					_acceleration;
 	float							_terminalVelocity;
 	bool							_lockedPosition;
 	bool							_collidable;

@@ -57,6 +57,7 @@ std::vector<sf::Vector2f> Rigid_Body::GetVertices(int vertexCount)
 
 void Rigid_Body::RectPhysicsUpdate(float gravity)
 {
+	_acceleration = _force / _mass;
 	_engineTools._deltaTime = _engineTools._clock.restart();
 	if (_lockedPosition)
 	{
@@ -67,7 +68,7 @@ void Rigid_Body::RectPhysicsUpdate(float gravity)
 	{
 		_velocity.y += gravity;
 		_position = _rectangle.getPosition();
-		_velocity += _force * _engineTools.DetlaTime();
+		_velocity += _acceleration * _engineTools.DetlaTime();
 		_rectangle.move(_velocity * _engineTools.DetlaTime());
 		_force = { 0, 0 };
 		return;
@@ -80,6 +81,7 @@ void Rigid_Body::RectPhysicsUpdate(float gravity)
 
 void Rigid_Body::CircPhysicsUpdate(float gravity)
 {
+	_acceleration = _force / _mass;
 	_engineTools._deltaTime = _engineTools._clock.restart();
 	if (_lockedPosition)
 	{
@@ -90,7 +92,7 @@ void Rigid_Body::CircPhysicsUpdate(float gravity)
 	{
 		_velocity.y += gravity;
 		_position = _circle.getPosition();
-		_velocity += _force * _engineTools.DetlaTime();
+		_velocity += _acceleration * _engineTools.DetlaTime();
 		_circle.move(_velocity * _engineTools.DetlaTime());
 		_force = { 0, 0 };
 		return;
